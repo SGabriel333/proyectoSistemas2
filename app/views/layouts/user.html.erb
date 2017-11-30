@@ -28,7 +28,8 @@
           <span class="sr-only">Toggle navigation</span>
         </a>
 
-<div class="navbar-custom-menu">
+
+      <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
           <!-- Messages: style can be found in dropdown.less-->
           <li class="dropdown messages-menu">
@@ -226,15 +227,14 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <span class="hidden-xs">Alexander Pierce</span>
+              <span class="hidden-xs"><%= current_user.name + ' ' +current_user.last_name%></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
              
                 <p>
-                  current_user
-                  <small>Member since Nov. 2012</small>
+                  <%= current_user.email%>
                 </p>
               </li>
               <!-- Menu Body -->
@@ -255,18 +255,17 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <%=link_to 'Editar Perfil', edit_user_registration_path,:class=>"btn btn-default btn-flat"%>
                 </div>
+
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat"><%=link_to destroy_user_session_path(:authenticity_token=> form_authenticity_token()),method: 'delete' do %>Salir</a><%end%>
+                  <%= link_to 'Salir', destroy_user_session_path(:authenticity_token => form_authenticity_token()), method: :delete, :class=>'btn btn-default btn-flat'%>
+               
                 </div>
               </li>
             </ul>
           </li>
-          <!-- Control Sidebar Toggle Button -->
-          <li>
-            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-          </li>
+         
         </ul>
       </div>
       </nav>
@@ -281,7 +280,9 @@
         </div>
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
+     
           <li class="header">MENU</li>
+        
           <li class="active treeview">
             <a href="#">
               <i class="fa fa-list-alt fa-fw"></i> <span>Extension</span>
@@ -289,6 +290,7 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
+      
             <ul class="treeview-menu">
               <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i> Proyectos</a></li>
               <li><a href="index2.html"><i class="fa fa-circle-o"></i> Actividades</a></li>
@@ -297,7 +299,9 @@
           </li>
           <li><a href="https://adminlte.io/docs"><i class="fa fa-users"></i> <span>Universitarios</span></a></li>
           <li><a href="https://adminlte.io/docs"><i class="fa fa-camera"></i> <span>Galeria</span></a></li>    
-          <li><a href="user"><i class="fa fa-user"></i> <span>Usuarios</span></a></li>
+          <li><%= link_to usuarios_path do%><i class="fa fa-user"></i> <span>Usuarios</span>
+          <%end%>
+          </li>
         
         </ul>
       </section>

@@ -5,21 +5,26 @@
 
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
+  <%= javascript_pack_tag%>
 </head>
 <body class="hold-transition skin-green sidebar-mini">
+    <% if notice %>
+      <p class="alert alert-success"><%= notice %></p>
+    <% end %>
+    <% if alert %>
+      <p class="alert alert-danger"><%= alert %></p>
+    <% end %>
+    
+
 
   <div class="wrapper">
-    <header class="main-header">
+ <header class="main-header">
       <!-- Logo -->
-      <a href="/" class="logo">  <!-- "/" es la ruta especificada al home#index -->
+      <a class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini">Ext-Inv.</span>
+        <span class="logo-mini"><b>D.</b>Ex</span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg">Ext-Inv</span>
+        <span class="logo-lg"><b>Depto. </b>Extension</span>
       </a>
       <!-- Header Navbar: style can be found in header.less -->
       <nav class="navbar navbar-static-top">
@@ -27,6 +32,36 @@
         <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
           <span class="sr-only">Toggle navigation</span>
         </a>
+
+
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <!-- User Account: style can be found in dropdown.less -->
+          <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <span class="hidden-xs"><%= current_user.name + ' ' +current_user.last_name%></span>
+            </a>
+            <ul class="dropdown-menu">
+              <!-- User image -->
+              <li class="user-header">
+                <p>
+                  <%= current_user.email%>
+                </p>
+              </li>
+              <!-- Menu Footer-->
+              <li class="user-footer">
+               <div class="pull-left">
+                  <%=link_to 'Editar Perfil', edit_user_registration_path,:remote=>true,:class=>"btn btn-default btn-flat",:id=>"myModal"%>
+                </div>
+                <div class="pull-right">
+                  <%= link_to 'Salir', destroy_user_session_path(:authenticity_token => form_authenticity_token()), method: :delete, :class=>'btn btn-default btn-flat'%>
+                </div>
+              </li>
+            </ul>
+          </li>
+         
+        </ul>
+      </div>
       </nav>
     </header>
     <!-- Left side column. contains the logo and sidebar -->
@@ -41,6 +76,7 @@
         <ul class="sidebar-menu" data-widget="tree">
           <li class="header">MENU</li>
           <li class="treeview">
+         <%if current_user.is_adminExt? || current_user.is_admin?%>         
             <a href="#">
               <i class="fa fa-list-alt fa-fw"></i> <span>Extensión</span>
               <span class="pull-right-container">
@@ -48,12 +84,14 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><%= link_to extensions_path(:nombre => 'Activity') do%><i class="fa fa-circle-o"></i> Actividades<%end%></li>
-              <li><%= link_to extensions_path(:nombre => 'Proyect') do%><i class="fa fa-circle-o"></i> Proyectos<%end%></li>
-              <li><%= link_to extensions_path(:nombre => 'Service') do%><i class="fa fa-circle-o"></i> Servicios<%end%></li>
+              <li><a href="index.html"><i class="fa fa-circle-o"></i> Proyectos</a></li>
+              <li><a href="index2.html"><i class="fa fa-circle-o"></i> Actividades</a></li>
+              <li><a href="index2.html"><i class="fa fa-circle-o"></i> Servicios</a></li>
             </ul>
-          </li>
-          <li class="treeview">
+         <%end%>   
+         </li>
+           <li class="treeview">
+        <%if current_user.is_adminInv? || current_user.is_admin? || current_user.is_investigador?%>  
             <a href="#">
               <i class="fa fa-list-alt fa-fw"></i> <span>Investigación</span>
               <span class="pull-right-container">
@@ -61,22 +99,22 @@
               </span>
             </a>
             <ul class="treeview-menu">
-
-             
-              <li><%= link_to investigations_path do%><i class="fa fa-circle-o"></i> Informes<%end%></li>
+              <li><a href="investigations"><i class="fa fa-circle-o"></i> Informes</a></li>
               <li><a href="index2.html"><i class="fa fa-circle-o"></i> Docentes</a></li>
               <li><a href="index2.html"><i class="fa fa-circle-o"></i> Alumnos</a></li>
-
             </ul>
-          </li>
-          <li><%= link_to students_path do%><i class="fa fa-users"></i> <span>Universitarios</span><%end%></li>
-          <li><%= link_to photos_path do%><i class="fa fa-camera"></i> <span>Galeria</span><% end %></li>    
-
-          <li><%= link_to usuarios_path do%><i class="fa fa-user"></i> <span>Usuarios</span><% end %></li>
-
-          <li><%= link_to audits_path do%><i class="fa fa-user-secret"></i> <span>Auditoria</span><%end%></li>
-
-          <li><%=link_to 'Salir',destroy_user_session_path(:authenticity_token=> form_authenticity_token()),method: 'delete' %></li>
+            <%end%>
+            </li>
+          
+          <li><a href="students"><i class="fa fa-users"></i> <span>Universitarios</span></a></li>
+          <li><a href="https://adminlte.io/docs"><i class="fa fa-camera"></i> <span>Galeria</span></a></li>  
+          <%if current_user.is_admin?%>  
+         <li><%= link_to usuarios_path do%><i class="fa fa-user"></i> <span>Usuarios</span>
+          <%end%>
+          <%end%>
+          <%if current_user.is_admin?%>
+          <li><a href="audits"><i class="fa fa-user-secret"></i> <span>Auditoria</span></a></li>
+          <%end%>
         </ul>
       </section>
       <!-- /.sidebar -->
@@ -87,6 +125,8 @@
       <!-- Content Header (Page header) -->
 <%=yield%>
 
+  <div id='ver' style='display:none;'>
+  </div> 
     </div>
     <!-- /.content-wrapper -->
     
@@ -98,6 +138,8 @@
          immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
   </div>
+
+
 
 </body>
 </html>

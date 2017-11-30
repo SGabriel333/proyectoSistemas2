@@ -30,18 +30,21 @@
                      <td>
                      <%if can? :read, usuario%>
                         <%= link_to usuario_path(usuario) do %>
-                          <i class="fa fa-fw fa-eye"></i>
+                          <i class="btn fa fa-fw fa-eye" data-toggle="tooltip" title="ver"></i>
                         <%end%>
                      <%end%>
                      <%if can? :update, usuario%>
                         <%= link_to edit_usuario_path(usuario) do %>
-                          <i class="fa fa-fw fa-pencil-square-o"></i>
+                          <i class="btn fa fa-fw fa-pencil-square-o" data-toggle="tooltip" title="editar"></i>
                        <%end%>
                      <%end%>
-                     <%if cannot? :destroy,usuario%>
-                        <%= link_to usuario_path(usuario), method: :delete, data: { confirm: 'Are you sure?'} do %>
-                          <i class="fa fa-fw fa-remove"></i>
+                     <%if can? :destroy,usuario%>
+                        <%if usuario==current_user%>
+                        <%else%>
+                        <%= button_to usuario_path(usuario), method: :delete, data: { confirm: 'Are you sure?'} do %>
+                          <i data-toggle="tooltip" title="eliminar"/>
                         <%end%>
+                     <%end%>
                      <%end%>
                     </td>
                    </tr>
@@ -65,7 +68,7 @@
           </div>
           
 <%if can? :create,current_user%>
-<%= link_to new_usuario_path do %>
+<%= link_to new_usuario_path, :remote=> true do %>
 <button class="btn btn-primary" type="submit">Agregar Usuario</button>
 <%end%>
 <%end%>
@@ -82,13 +85,16 @@
     $('#example1').DataTable()
     $('#example2').DataTable({
       'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
+      'lengthChange': true,
+      'searching'   : true,
       'ordering'    : true,
       'info'        : true,
-      'autoWidth'   : false
+      'autoWidth'   : true
     })
   })
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
 </script>
 
 
