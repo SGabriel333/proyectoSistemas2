@@ -1,5 +1,4 @@
 class CarrerasController < ApplicationController
-  layout 'template'
   before_action :set_carrera, only: [:show, :edit, :update, :destroy]
 
   # GET /carreras

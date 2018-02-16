@@ -3,10 +3,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
 
     before_action :configure_permitted_parameters, if: :devise_controller?
-    before_action :set_current_user
-    rescue_from CanCan::AccessDenied do |exception|
-    redirect_to main_app.root_url, :alert => exception.message
-    end
 
     protected
 
@@ -22,18 +18,6 @@ class ApplicationController < ActionController::Base
        redirect_to root_path
      end
   end
-   def authenticated_user
-    if current_user
-      current_user
-    else
-      current_user
-    end
-  end
-  def set_current_user
-    User.current=current_user
-  end
+
 
 end
-
-
-

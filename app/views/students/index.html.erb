@@ -1,7 +1,7 @@
-<div class="invoice">
+<p id="notice"><%= notice %></p>
+
 <h1>Universitarios</h1>
-  <div id="estudiante" style="display:none;"></div>
-  <div class="invoice">
+
  <!-- Main content -->
     <section class="content">
       <div class="row">
@@ -20,7 +20,9 @@
                   <th>Correo</th>
                   <th>Horas de Extension</th>
                   <th>Carrera</th>
-                  <th>Opciones</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
                 </tr>
                 </thead>
                   <tbody>
@@ -32,12 +34,25 @@
                         <td><%= student.email %></td>
                         <td><%= student.hours %></td>
                         <td><%= student.career.name %></td>
-                        <td>
-                        <%= link_to '', edit_student_path(student), class: 'btn btn-default fa fa-pencil', :remote=>true %>
-                        <%= link_to '', student, class: 'btn btn-default fa fa-close', method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                        <td><%= link_to 'Show', student %></td>
+                        <td><%= link_to 'Edit', edit_student_path(student) %></td>
+                        <td><%= link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' } %></td>
                       </tr>
                     <% end %>
                   </tbody>
+                <tfoot>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Apellido</th>
+                  <th>CI</th>
+                  <th>Correo</th>
+                  <th>Horas de Extension</th>
+                  <th>Carrera</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </tr>
+                </tfoot>
               </table>
             </div>
             <!-- /.box-body -->
@@ -48,10 +63,11 @@
       </div>
       <!-- /.row -->
     </section>
-</div>
+
 <script>
   $(function () {
-    $('#example1').DataTable({
+    $('#example1').DataTable()
+    $('#example2').DataTable({
       'paging'      : true,
       'lengthChange': false,
       'searching'   : true,
@@ -61,7 +77,4 @@
     })
   })
 </script>
-<%= link_to 'Nuevo universitario', new_student_path, class: 'btn  btn-primary', :remote=>true %>
-
-
-
+<%= link_to 'Nuevo universitario', new_student_path, class: 'btn  btn-primary' %>

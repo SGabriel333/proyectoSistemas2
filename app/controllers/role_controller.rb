@@ -1,5 +1,4 @@
 class RoleController < ApplicationController
-layout 'template'
 before_action :set_role, only: [:show, :edit, :update,:destroy]
 
 def index
@@ -19,7 +18,7 @@ end
 def create
     @role = Role.new(role_params)
     @role.save
-    redirect_to role_index_path
+    redirect_to new_user_path
 end
 
 def destroy

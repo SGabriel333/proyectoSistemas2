@@ -21,19 +21,20 @@
         <td><%= user.email %></td>
         <td><%= user.roles.pluck(:name).join(",")%></td>
         <td>
-          <%if can? :read,user%>
+          <%if can? :read, user%>
           <%= link_to user do %>
-          <span class="fa fa-fw fa-eye"></span>
+          <span class="glyphicon glyphicon-eye-open"></span>
           <%end%>
           <%end%>
-          <%if can? :update,user%>
+
+          <%if can? :update, user%>
           <%= link_to edit_user_path(user) do %>
-          <span class=" fa fa-fw fa-pencil-square-o"></span>
-        <%end%>
-        <%end%>
-        <%if can? :destroy,user%>
+          <span class="glyphicon glyphicon-pencil"></span>
+          <%end%>
+          <%end%>
+        <%if cannot? :destroy,user%>
         <%= link_to user, method: :delete, data: { confirm: 'Are you sure?'} do %>
-        <span class=" fa fa-fw fa-remove"></span>
+        <span class="glyphicon glyphicon-remove"></span>
         <%end%>
         <%end%>
      

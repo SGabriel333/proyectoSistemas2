@@ -1,32 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Dirección de Extensión e Investigación</title>
+	<title>Dirección de Extensión e Investigación</title>
 
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-
+  <%= javascript_pack_tag%>
 </head>
 <body class="hold-transition skin-green sidebar-mini">
+    <% if notice %>
+      <p class="alert alert-success"><%= notice %></p>
+    <% end %>
+    <% if alert %>
+      <p class="alert alert-danger"><%= alert %></p>
+    <% end %>
+    
+
 
   <div class="wrapper">
-    <header class="main-header">
+ <header class="main-header">
       <!-- Logo -->
-      <a href="/" class="logo">  <!-- "/" es la ruta especificada al home#index -->
+      <a class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <%if current_user.is_adminExt? %>
-          <span class="logo-mini">Ext</span>
-          <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg">Extensión</span>
-        <% elsif current_user.is_adminInv?%>
-          <span class="logo-mini">Inv.</span>
-          <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg">Investigación</span>
-        <% elsif current_user.is_admin?%>
-          <span class="logo-mini">Ext-Inv</span>
-          <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg">Ext-Inv</span>
-        <% end %>
+        <span class="logo-mini"><b>D.</b>Ex</span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg"><b>Depto. </b>Extension</span>
       </a>
       <!-- Header Navbar: style can be found in header.less -->
       <nav class="navbar navbar-static-top">
@@ -34,6 +32,36 @@
         <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
           <span class="sr-only">Toggle navigation</span>
         </a>
+
+
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <!-- User Account: style can be found in dropdown.less -->
+          <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <span class="hidden-xs"><%= current_user.name + ' ' +current_user.last_name%></span>
+            </a>
+            <ul class="dropdown-menu">
+              <!-- User image -->
+              <li class="user-header">
+                <p>
+                  <%= current_user.email%>
+                </p>
+              </li>
+              <!-- Menu Footer-->
+              <li class="user-footer">
+               <div class="pull-left">
+                  <%=link_to 'Editar Perfil', edit_user_registration_path,:remote=>true,:class=>"btn btn-default btn-flat",:id=>"myModal"%>
+                </div>
+                <div class="pull-right">
+                  <%= link_to 'Salir', destroy_user_session_path(:authenticity_token => form_authenticity_token()), method: :delete, :class=>'btn btn-default btn-flat'%>
+                </div>
+              </li>
+            </ul>
+          </li>
+         
+        </ul>
+      </div>
       </nav>
     </header>
     <!-- Left side column. contains the logo and sidebar -->
@@ -42,57 +70,51 @@
       <section class="sidebar">
         <!-- Sidebar user panel -->
         <div class="user-panel">
-          <div class="pull-left info">
-              <span class="hidden-xs"><%= current_user.name + ' ' +current_user.last_name%></span><br/>
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-        </div>
+
         </div>
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
           <li class="header">MENU</li>
-
-          <%if current_user.is_adminExt? || current_user.is_admin?%>
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-list-alt fa-fw"></i> <span>Extensiones</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><%= link_to extensions_path(:nombre => 'Activity') do%><i class="fa fa-circle-o"></i> Actividades<%end%></li>
-                <li><%= link_to extensions_path(:nombre => 'Proyect') do%><i class="fa fa-circle-o"></i> Proyectos<%end%></li>
-                <li><%= link_to extensions_path(:nombre => 'Service') do%><i class="fa fa-circle-o"></i> Servicios<%end%></li>
-              </ul>
-            </li>
+          <li class="treeview">
+         <%if current_user.is_adminExt? || current_user.is_admin?%>         
+            <a href="#">
+              <i class="fa fa-list-alt fa-fw"></i> <span>Extensión</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="index.html"><i class="fa fa-circle-o"></i> Proyectos</a></li>
+              <li><a href="index2.html"><i class="fa fa-circle-o"></i> Actividades</a></li>
+              <li><a href="index2.html"><i class="fa fa-circle-o"></i> Servicios</a></li>
+            </ul>
+         <%end%>   
+         </li>
+           <li class="treeview">
+        <%if current_user.is_adminInv? || current_user.is_admin? || current_user.is_investigador?%>  
+            <a href="#">
+              <i class="fa fa-list-alt fa-fw"></i> <span>Investigación</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="investigations"><i class="fa fa-circle-o"></i> Informes</a></li>
+              <li><a href="index2.html"><i class="fa fa-circle-o"></i> Docentes</a></li>
+              <li><a href="index2.html"><i class="fa fa-circle-o"></i> Alumnos</a></li>
+            </ul>
             <%end%>
-          <%if current_user.is_adminInv? || current_user.is_admin?%>
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-list-alt fa-fw"></i> <span>Investigaciones</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><%= link_to investigations_path(:param => 'docenteInvestigador') do%><i class="fa fa-circle-o"></i> Informes de Docentes<%end%></li>
-                <li><%= link_to investigations_path(:param => 'alumnoInvestigador')  do%><i class="fa fa-circle-o"></i> Informes Universitarios<%end%></li>
-              </ul>
             </li>
-          <% end %>
-
-          <%if current_user.is_adminExt? || current_user.is_admin?%>
-            <li><%= link_to managers_path do%><i class="fa fa-users"></i> <span>Encargados</span><%end%></li>
-            <li><%= link_to students_path do%><i class="fa fa-users"></i> <span>Universitarios</span><%end%></li>
-            <li><%= link_to photos_path do%><i class="fa fa-camera"></i> <span>Galeria</span><% end %></li>    
-          <% end %>
-
-          <li><%= link_to usuarios_path do%><i class="fa fa-user"></i> <span>Usuarios</span><% end %></li>
-
-          <li><%= link_to audits_path do%><i class="fa fa-user-secret"></i> <span>Auditoria</span><%end%></li>
-
-          <li><%=link_to 'Salir',destroy_user_session_path(:authenticity_token=> form_authenticity_token()),method: 'delete' %></li>
-         
+          
+          <li><a href="students"><i class="fa fa-users"></i> <span>Universitarios</span></a></li>
+          <li><a href="https://adminlte.io/docs"><i class="fa fa-camera"></i> <span>Galeria</span></a></li>  
+          <%if current_user.is_admin?%>  
+         <li><%= link_to usuarios_path do%><i class="fa fa-user"></i> <span>Usuarios</span>
+          <%end%>
+          <%end%>
+          <%if current_user.is_admin?%>
+          <li><a href="audits"><i class="fa fa-user-secret"></i> <span>Auditoria</span></a></li>
+          <%end%>
         </ul>
       </section>
       <!-- /.sidebar -->
@@ -101,11 +123,14 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper" style="padding-top:1px;">
       <!-- Content Header (Page header) -->
+<%=yield%>
 
-      <%= yield %>
+  <div id='ver' style='display:none;'>
+  </div> 
     </div>
     <!-- /.content-wrapper -->
     
+
     <!-- Control Sidebar -->
 
     <!-- /.control-sidebar -->
@@ -113,6 +138,8 @@
          immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
   </div>
+
+
 
 </body>
 </html>

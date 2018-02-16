@@ -1,4 +1,4 @@
-<%=  form_for(@manager) do |form| %>
+<%= form_with(model: manager, local: true) do |form| %>
   <% if manager.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(manager.errors.count, "error") %> prohibited this manager from being saved:</h2>
@@ -16,27 +16,28 @@
 <div class="col-md-6">
   <div class="form-group">
     <%= form.label "Nombre" %>
-    <%= form.text_field :name, id: :manager_name , class: 'form-control' %>
+    <%= form.text_field :name, id: :manager_name %>
   </div>
 
   <div class="form-group">
     <%= form.label "Descripción" %>
-    <%= form.text_field :description, id: :manager_description, class: 'form-control'  %>
+    <%= form.text_field :description, id: :manager_description %>
   </div>
 
   <div class="form-group">
     <%= form.label "Dirección" %>
-    <%= form.text_field :place, id: :manager_place , class: 'form-control' %>
+    <%= form.text_field :place, id: :manager_place %>
   </div>
 
   <div class="form-group">
+  <div class="field">
     <%= form.label :email %>
-    <%= form.text_field :email, id: :manager_email , class: 'form-control' %>
+    <%= form.text_field :email, id: :manager_email %>
   </div>
 
   <div class="form-group">
     <%= form.label "Teléfono" %>
-    <%= form.text_field :phone, id: :manager_phone, class: 'form-control'  %>
+    <%= form.text_field :phone, id: :manager_phone %>
   </div>
 
   <div class="actions">
@@ -44,9 +45,8 @@
       <%= link_to 'Volver', managers_path, class: 'btn btn-default'%>
     <%= form.submit "Agregar encargado", class: 'btn btn-primary'%>
     <% end %>
-    </ul>
   </div>
+  </ul>
 
-</div>
 
 <div class="col-md-3"></div>

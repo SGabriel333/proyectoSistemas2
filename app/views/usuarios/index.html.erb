@@ -1,24 +1,13 @@
- <% if flash[:notice] %>
-    <div class="alert alert-success alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">x</a><%= flash[:notice] %>
-    </div>
-  <% end %>
-  <% if flash[:alert] %>
-      <div class="alert alert-danger alert-dismissable">
-          <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-          <%= flash[:alert] %>
-        </div>
-  <% end %>
 <section class="content">
       <div class="row">
         <div class="col-xs-12">    
       <!-- Content Header (Page header) -->
-          <div class="box">
+                <div class="box">
             <div class="box-header">
               <h3 class="box-title">Usuarios</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <br/>
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -27,30 +16,33 @@
                       <th>Email</th>
                       <th>Rol</th>
                       <th>Acciones</th>
-                                    
-                </tr>
+                     </tr>
                 </thead>
                   <tbody>
               <% @users.each do |usuario| %>
-                    <tr>
+     
+                   <tr>
+
                      <td><%= usuario.name %></td>
                      <td><%= usuario.last_name %></td>
                      <td><%= usuario.email %></td>
                      <td><%= usuario.roles.pluck(:name).join(",")%></td>
                      <td>
-                     <%if can? :read, usuario%>        
-                        <%= link_to usuario_path(usuario),:remote => true,class: 'btn btn-default fa fa-eye' do %>
+                     <%if can? :read, usuario%>
+                        <%= link_to usuario_path(usuario) do %>
+                          <i class="btn fa fa-fw fa-eye" data-toggle="tooltip" title="ver"></i>
                         <%end%>
                      <%end%>
                      <%if can? :update, usuario%>
-                        <%= link_to edit_usuario_path(usuario),:remote=>true, class: 'btn btn-default fa fa-edit' do %>
+                        <%= link_to edit_usuario_path(usuario) do %>
+                          <i class="btn fa fa-fw fa-pencil-square-o" data-toggle="tooltip" title="editar"></i>
                        <%end%>
                      <%end%>
-                   
                      <%if can? :destroy,usuario%>
                         <%if usuario==current_user%>
-                        <%else%>    
-                        <%= link_to usuario_path(id: usuario.id, authenticity_token: form_authenticity_token), method: :delete,class: 'btn btn-default fa fa-remove', data: { confirm: 'Estas seguro?'} do %>
+                        <%else%>
+                        <%= button_to usuario_path(usuario), method: :delete, data: { confirm: 'Are you sure?'} do %>
+                          <i data-toggle="tooltip" title="eliminar"/>
                         <%end%>
                      <%end%>
                      <%end%>
@@ -69,24 +61,17 @@
                 </tr>
                 </tfoot>
               </table>
-  
-
             </div>
-          <div class="box-footer clearfix">
-          <ul class="pagination pagination-sm no-margin pull-left">
-          <li>
-          <%if can? :create,current_user%>
-          <%= link_to new_usuario_path, :remote=> true do %>
-          <button class="btn btn-primary" type="submit">Agregar Usuario</button>
-          <%end%>
-          <%end%>
-          </li>
-          </ul>
-          </div>
+
 
             <!-- /.box-body -->
           </div>
-        
+          
+<%if can? :create,current_user%>
+<%= link_to new_usuario_path, :remote=> true do %>
+<button class="btn btn-primary" type="submit">Agregar Usuario</button>
+<%end%>
+<%end%>
 
           <!-- /.box -->
         </div>
@@ -94,10 +79,6 @@
       </div>
       <!-- /.row -->
     </section>
-
-
-   <div id='ver' style='display:none;'>
-  </div>
 
 <script>
   $(function () {
@@ -111,8 +92,10 @@
       'autoWidth'   : true
     })
   })
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
 </script>
-
 
 
 <!-- Trigger the modal with a button -->

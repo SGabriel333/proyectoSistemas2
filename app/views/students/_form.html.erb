@@ -13,43 +13,37 @@
 
 <div class="container col-sm-10 col-md-8 col-lg-5">
   <div class= "field">
-    <%= form.label 'Nombre' %>
+    <%= form.label ':name' %>
     <%= form.text_field :name, id: :student_name, class: 'form-control'  %>
   </div>
 
-  <div class="field">
-    <%= form.label 'Apellido'%>
-    <%= form.text_field :lastname, id: :student_last_name, class: 'form-control' %>
+  <div class="field">
+    <%= form.label :last_name %>
+    <%= form.text_field :last_name, id: :student_last_name, class: 'form-control' %>
   </div>
 
   <div class="field"> 
-    <%= form.label 'CI' %>
+    <%= form.label :ci %>
     <%= form.number_field :ci, id: :student_ci, class: 'form-control' %>
   </div>
 
   <div class="field">
-    <%= form.label  'Correo' %>
-    <%= form.text_field :email, id: :student_mail, class: 'form-control' %>
+    <%= form.label  :mail %>
+    <%= form.text_field :mail, id: :student_mail, class: 'form-control' %>
   </div>
 
   <div class="field">
-    <%= form.label 'Horas de extension'%>
+    <%= form.label :hours %>
     <%= form.number_field :hours, id: :student_hours, class: 'form-control' %>
   </div>
+
   <div class="field">
-    <%= form.label 'Carrera' %>
-    <%= form.select :career_id,  options_for_select(Career.all.map{ |c| [c.name, c.id]}), {}, {class: 'select2',:style => "width:100%;"}%>
+    <%= form.label :career_id %>
+    <%= form.select :career_id,  options_for_select(Career.all.map{ |c| [c.name, c.id]}) %>
   </div>
 
   <div class="actions">
-    <%= link_to 'Atras', students_path, class: 'btn btn-default' %>
-    <%= form.submit 'Guardar',class: 'btn btn-primary'%>
+    <%= form.submit%>
   </div>
 </div>
 <% end %>
-<script>
-$(document).ready(function() {
-    $('.select2').select2();
-});
-</script>
-

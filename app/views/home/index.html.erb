@@ -1,13 +1,144 @@
+<<<<<<< HEAD
 
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF'8">
-  <title>Dirección de Extensión e Investigación - FIUNI</title> 
+  <title>Dirección de Extensión e Investigación - FIUNI</title>
+
+</head>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 </head>
 
 <body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item active"">
+              <a class="nav-link" href="/home/index">Home <span class="sr-only">(current)</span></a>
+              </li>
+      <% if user_signed_in? %>
+          <%if can? :read,@users%>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="/user">Registrar Usuarios</a>
+          </li>
+          <%end%>
+          
+      <%end%>
+            <li class="nav-item"">
+              <a class="nav-link disabled" href="/alumnos">Alumnos</a>
+            </li>
+              <li class="nav-item"">
+              <a class="nav-link disabled" href="/carreras">Carrera</a>
+            </li>
+          </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <nav class="navbar navbar-light bg-faded">
+            <form class="form-inline">
+              
+              <% if user_signed_in? %>
+                Logged in as <strong><%= current_user.email %></strong>.
+                  <%= link_to 'Edit profile', edit_user_path(current_user), :class => 'navbar-link', :class => 'btn btn-outline-success' %> |
+                <%= link_to 'Sign out', destroy_user_session_path(:authenticity_token => form_authenticity_token()), method: 'delete', :class => 'navbar-link', :class => 'btn btn-outline-secondary' %>
+                <%else%>
+                <%= link_to "Sign in", new_user_session_path, :class => 'navbar-link', :class => 'btn btn-outline-secondary'  %>
+              <%end%>
+            </form>
+          </nav>
+          
+          </ul>
+      </div>
 
-</body>  
+    </nav>
+</body>
+
+<body class="hold-transition skin-green sidebar-mini">
+
+  <div class="wrapper">
+
+    <header class="main-header">
+      <!-- Logo -->
+      <a class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini"><b>D.</b>Ex</span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg"><b>Depto. </b>Extension</span>
+      </a>
+      <!-- Header Navbar: style can be found in header.less -->
+      <nav class="navbar navbar-static-top">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+          <span class="sr-only">Toggle navigation</span>
+        </a>
+      </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+      <!-- sidebar: style can be found in sidebar.less -->
+      <section class="sidebar">
+        <!-- Sidebar user panel -->
+        <div class="user-panel">
+
+        </div>
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu" data-widget="tree">
+          <li class="header">MENU</li>
+          <li class="active treeview">
+            <a href="#">
+              <i class="fa fa-list-alt fa-fw"></i> <span>Extension</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i> Proyectos</a></li>
+              <li><a href="index2.html"><i class="fa fa-circle-o"></i> Actividades</a></li>
+              <li><a href="index2.html"><i class="fa fa-circle-o"></i> Servicios</a></li>
+            </ul>
+          </li>
+          <li><a href="https://adminlte.io/docs"><i class="fa fa-users"></i> <span>Universitarios</span></a></li>
+          <li><a href="https://adminlte.io/docs"><i class="fa fa-camera"></i> <span>Galeria</span></a></li>    
+          <li><a href="https://adminlte.io/docs"><i class="fa fa-user"></i> <span>Usuarios</span></a></li>
+        </ul>
+      </section>
+      <!-- /.sidebar -->
+    </aside>
+  
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper" style="padding-top:1px;">
+      <!-- Content Header (Page header) -->
+     <%= yield %>
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+      <div class="pull-right hidden-xs">
+        <b>Version</b> 2.4.0
+      </div>
+      <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
+      reserved.
+    </footer>
+
+    <!-- Control Sidebar -->
+
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
+         immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+  </div>
+
+</body>
 </html>
 
+=======
+current_user
+<H3>BIENVENIDOS AL SISTEMA VERSION 2.0</H3>
+
+
+>>>>>>> b3b4ac86317c436d3527b6c90a89f00d21182c11

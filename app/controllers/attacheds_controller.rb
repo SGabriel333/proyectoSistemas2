@@ -1,6 +1,6 @@
 class AttachedsController < ApplicationController
   before_action :set_attached, only: [:show, :edit, :update, :destroy]
-  layout 'template'
+  layout 'index'
 
   # GET /attacheds
   # GET /attacheds.json
@@ -16,8 +16,6 @@ class AttachedsController < ApplicationController
   # GET /attacheds/new
   def new
     @attached = Attached.new
-    # Completa el campo con el parametro pasado.
-    @attached.investigation_id = params[:var]
   end
 
   # GET /attacheds/1/edit
@@ -29,23 +27,13 @@ class AttachedsController < ApplicationController
   def create
     @attached = Attached.new(attached_params)
 
-    # Asigna la fecha de subida con la fecha actual por defecto.
-    @attached.fecha_subida = Date.today
-
-    # Solo se guarda si éstos campos existen.
-    if (!@attached.descripcion.present? or !@attached.file.present?)
-      
-      redirect_to request.referrer, notice: 'Complete todos los campos.!'
-
+    respond_to do |format|
+      if @attached.save
+        format.html { redirect_to @attached, notice: 'Attached was successfully created.' }
+        format.json { render :show, status: :created, location: @attached }
       else
-        respond_to do |format|
-        if @attached.save
-          format.html { redirect_to Investigation.find(@attached.investigation_id), notice: 'Adjunto creado exitosamente.' }
-          format.json { render :show, status: :created, location: @attached }
-        else
-          format.html { render :new }
-          format.json { render json: @attached.errors, status: :unprocessable_entity }
-        end
+        format.html { render :new }
+        format.json { render json: @attached.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -53,20 +41,15 @@ class AttachedsController < ApplicationController
   # PATCH/PUT /attacheds/1
   # PATCH/PUT /attacheds/1.json
   def update
-    if (!@attached.descripcion.present? or !@attached.file.present?)
-      redirect_to request.referrer, notice: 'Complete todos los campos.!'
-
-      else  
-        respond_to do |format|
-          if @attached.update(attached_params)
-            format.html { redirect_to Investigation.find(@attached.investigation_id), notice: 'Adjunto modificado.' }
-            format.json { render :show, status: :ok, location: @attached }
-          else
-            format.html { render :edit }
-            format.json { render json: @attached.errors, status: :unprocessable_entity }
-          end
-        end
-      end  
+    respond_to do |format|
+      if @attached.update(attached_params)
+        format.html { redirect_to @attached, notice: 'Attached was successfully updated.' }
+        format.json { render :show, status: :ok, location: @attached }
+      else
+        format.html { render :edit }
+        format.json { render json: @attached.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # DELETE /attacheds/1
@@ -76,7 +59,7 @@ class AttachedsController < ApplicationController
     @attached.save
     @attached.destroy
     respond_to do |format|
-      format.html { redirect_to request.referrer, notice: 'Attached was successfully destroyed.' }
+      format.html { redirect_to attacheds_url, notice: 'Attached was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

@@ -1,3 +1,53 @@
-<div class="container">	
-	<%= render 'form', user: @user %>
+ <%= form_for @user, :html => {:class => "form-horizontal center"} , url: {action: "create"} do |f|%> 
+ <div class="blue1">
+  <br/><br/><br/>
+  <div class="form-group">
+        <%= f.label :name, "Nombre:", class: "col-md-4 control-label" %>
+        <div class="col-md-4">
+          <%= f.text_field :name, autofocus: true,class: "form-control" %>
+        </div>
+  </div>
+  <br/>
+  <div class="form-group">
+        <%= f.label :last_name, "Apellido:", class: "col-md-4 control-label" %>
+        <div class="col-md-4">
+          <%= f.text_field :last_name, class: "form-control" %>
+        </div>
+  </div>
+ 
+  <div class="form-group">
+        <%= f.label :lname, "Correo Electronico:", class: "col-md-4 control-label" %>
+        <div class="col-md-4">
+          <%= f.text_field :email,autofocus: true, class: "form-control" %>
+        </div>
+  </div>
+
+
+  <div class="form-group">
+    <%= f.label "Contraseña", class: "col-md-4 control-label" %>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %>
+    <div class="col-md-4">
+    <%= f.password_field :password, autocomplete: "off",class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label "Confirmar contraseña",class: "col-md-4 control-label" %>
+    <div class="col-md-4">
+    <%= f.password_field :password_confirmation, autocomplete: "off",class: "form-control"%>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label "Cargo",class: "col-md-4 control-label" %>
+    <div class="col-md-4">  
+    <%= select_tag :role, options_from_collection_for_select(Role.all,"name","name"),class: "form-control"%>
+    <br/>
+    <%= f.submit "Registrar",class: "btn btn-primary"%>
+    </div>
+   </div>
 </div>
+<% end %>
+
+
