@@ -1,19 +1,29 @@
 <p id="notice"><%= notice %></p>
+<div class="invoice">
+<h1>Detalle Foto</h1>
+<section class="main row">
+   <div class="col-md-4">
+	<p>
+	  <strong>Nombre:</strong>
+	  <%= @photo.name %>
+	</p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @photo.name %>
-</p>
+	<p>
+	  <strong>Descripcion:</strong>
+	  <%= @photo.description %>
+	</p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @photo.description %>
-</p>
-
-<p>
-  <strong>Extension:</strong>
-  <%= @photo.extension %>
-</p>
-
-<%= link_to 'Edit', edit_photo_path(@photo) %> |
-<%= link_to 'Back', photos_path %>
+	<p>
+	  <strong>Extension:</strong>
+	  <%= @photo.extension_name %>
+	</p>
+</section>
+<section>
+	<div>
+		<%= image_tag @photo.img.url, size: "160x100" %>
+	</div>  
+</section>
+<br>
+<%= link_to 'Editar', edit_photo_path(@photo), class: 'btn btn-default btn-sm' %> 
+<%= link_to 'Volver', photos_path, class: 'btn btn-default btn-sm' %>
+</div>

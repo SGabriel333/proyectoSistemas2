@@ -13,37 +13,43 @@
 
 <div class="container col-sm-10 col-md-8 col-lg-5">
   <div class= "field">
-    <%= form.label ':name' %>
+    <%= form.label 'Nombre' %>
     <%= form.text_field :name, id: :student_name, class: 'form-control'  %>
   </div>
 
-  <div class="field">
-    <%= form.label :last_name %>
-    <%= form.text_field :last_name, id: :student_last_name, class: 'form-control' %>
+  <div class="field">
+    <%= form.label 'Apellido'%>
+    <%= form.text_field :lastname, id: :student_last_name, class: 'form-control' %>
   </div>
 
   <div class="field"> 
-    <%= form.label :ci %>
+    <%= form.label 'CI' %>
     <%= form.number_field :ci, id: :student_ci, class: 'form-control' %>
   </div>
 
   <div class="field">
-    <%= form.label  :mail %>
-    <%= form.text_field :mail, id: :student_mail, class: 'form-control' %>
+    <%= form.label  'Correo' %>
+    <%= form.text_field :email, id: :student_mail, class: 'form-control' %>
   </div>
 
   <div class="field">
-    <%= form.label :hours %>
+    <%= form.label 'Horas de extension'%>
     <%= form.number_field :hours, id: :student_hours, class: 'form-control' %>
   </div>
-
   <div class="field">
-    <%= form.label :career_id %>
-    <%= form.select :career_id,  options_for_select(Career.all.map{ |c| [c.name, c.id]}) %>
+    <%= form.label 'Carrera' %>
+    <%= form.select :career_id,  options_for_select(Career.all.map{ |c| [c.name, c.id]}), {}, {class: 'select2',:style => "width:100%;"}%>
   </div>
 
   <div class="actions">
-    <%= form.submit%>
+    <%= link_to 'Atras', students_path, class: 'btn btn-default' %>
+    <%= form.submit 'Guardar',class: 'btn btn-primary'%>
   </div>
 </div>
 <% end %>
+<script>
+$(document).ready(function() {
+    $('.select2').select2();
+});
+</script>
+

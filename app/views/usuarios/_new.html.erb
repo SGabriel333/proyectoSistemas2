@@ -1,7 +1,7 @@
 <!-- Modal -->
 <div id="miModal" class="modal fade" role="dialog">
 <div class="modal-dialog">
-
+<%= form_for @user, :html => {:class => "form-horizontal center",:id => "form"} , url: {action: "create"} do |f|%> 
 <!-- Modal content-->
 <div class="modal-content">
 <div class="modal-header">
@@ -9,66 +9,103 @@
 <h4 class="modal-title">Nuevo Usuario</h4>
 </div>
 <div class="modal-body">
-<%= form_for @user, :html => {:class => "form-horizontal center"} , url: {action: "create"} do |f|%> 
+
 <div class="blue1">
 <br/><br/><br/>
 <div class="form-group">
 <%= f.label :name, "Nombre:", class: "col-md-4 control-label" %>
-<div class="col-md-4">
-<%= f.text_field :name, autofocus: true,class: "form-control" %>
+<div class="col-md-6">
+<%= f.text_field :name, autofocus: true,class: "form-control input1" %>
 </div>
 </div>
 <br/>
 <div class="form-group">
-<%= f.label :last_name, "Apellido:", class: "col-md-4 control-label" %>
-<div class="col-md-4">
-<%= f.text_field :last_name, class: "form-control" %>
+<%= f.label :last_name, "Apellido:", class: "col-md-4 control-label " %>
+<div class="col-md-6">
+<%= f.text_field :last_name, class: "form-control input1" %>
 </div>
 </div>
 
 <div class="form-group">
 <%= f.label :lname, "Correo Electronico:", class: "col-md-4 control-label" %>
-<div class="col-md-4">
-<%= f.text_field :email,autofocus: true, class: "form-control" %>
+<div class="col-md-6">
+<%= f.text_field :email,autofocus: true, class: "form-control input1" %>
 </div>
 </div>
 
 
 <div class="form-group">
-<%= f.label "Contraseña", class: "col-md-4 control-label" %>
+<%= f.label "Contraseña", class: "col-md-4 control" %>
 <% if @minimum_password_length %>
 <em>(<%= @minimum_password_length %> characters minimum)</em>
 <% end %>
-<div class="col-md-4">
-<%= f.password_field :password, autocomplete: "off",class: "form-control" %>
+<div class="col-md-6">
+<%= f.password_field :password, autocomplete: "off",class: "form-control input1",id: :password1, required: "required"%>
 </div>
 </div>
 
 <div class="form-group">
-<%= f.label "Confirmar contraseña",class: "col-md-4 control-label" %>
-<div class="col-md-4">
-<%= f.password_field :password_confirmation, autocomplete: "off",class: "form-control"%>
+<%= f.label "Confirmar contraseña",class: "col-md-4 control-label"%>
+<div class="col-md-6">
+<%= f.password_field :password_confirmation, autocomplete: "off",class: "form-control input1", id: :password2,required: "required"%>
 </div>
 </div>
 <div class="form-group">
 <%= f.label "Cargo",class: "col-md-4 control-label" %>
-<div class="col-md-4">  
+<div class="col-md-6">  
 <%= select_tag :role, options_from_collection_for_select(Role.all,"name","name"),class: "form-control"%>
 <br/>
-<%= f.submit "Registrar",class: "btn btn-primary"%>
+
 </div>
 </div>
 </div>
-<% end %>
+
 
 </div>
 <div class="modal-footer">
+<%= f.submit "Guardar",class: "btn btn-primary", id: "submit"%>
 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
 </div>
 </div>
+<% end %>
+</div>
+</div>
+<script>
+$(document).ready(function() {
+    $('.select2').select2();
+    $('#submit').attr('disabled', true);
+    $(".input1").keyup(function() {
+      $('#submit').attr('disabled', false);
+        var form = $(this).parents("#form");
+        var check = checkCampos(form);
+        if(check) {
+            $('#submit').attr('disabled', false);
+            $('#comentario').hide();
+        }
+        else {
+            $('#submit').attr('disabled', true);
+            $('#comentario').show();
+        }
+    });
+});
+function checkCampos(obj) {
+    var camposRellenados = true;
+    obj.find(".input1").each(function() {
+    var $this = $(this);
+            if( $this.val().length <= 0 ) {
+                camposRellenados = false;
+                return false;
+            }
+    });
+    if(camposRellenados == false) {
+        return false;
+    }
+    else {
+        return true;
+    }
+}
 
-</div>
-</div>
+</script>
 
 
 

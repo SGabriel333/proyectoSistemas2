@@ -16,10 +16,16 @@ class StudentsController < ApplicationController
   # GET /students/new
   def new
     @student = Student.new
+    respond_to do |f|
+      f.js
+    end
   end
 
   # GET /students/1/edit
   def edit
+    respond_to do |f|
+      f.js
+    end
   end
 
   # POST /students
@@ -29,7 +35,7 @@ class StudentsController < ApplicationController
 
     respond_to do |format|
       if @student.save
-        format.html { redirect_to @student, notice: 'Student was successfully created.' }
+        format.html { redirect_to request.referrer, notice: 'Student was successfully created.' }
         format.json { render :show, status: :created, location: @student }
       else
         format.html { render :new }
@@ -43,7 +49,7 @@ class StudentsController < ApplicationController
   def update
     respond_to do |format|
       if @student.update(student_params)
-        format.html { redirect_to @student, notice: 'Student was successfully updated.' }
+        format.html { redirect_to request.referrer, notice: 'Student was successfully updated.' }
         format.json { render :show, status: :ok, location: @student }
       else
         format.html { render :edit }

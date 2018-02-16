@@ -1,9 +1,35 @@
 <p id="notice"><%= notice %></p>
+<div class="invoice">  
+<h1>Detalle de estado </h1>
+<section class="content">
+      <div class="row">
+        <div class="col-xs-12">    
+          <!-- Content Header (Page header) -->
+          <div class="box">
+          
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example1" class="table table-hover table-striped">
+                <thead>
+                <tr>
+                  <th>Nombre</th>
+              </tr>
+          </thead>
+        <tbody>
+          	<tr>
+		  		<td><%= @state.name %></td>	
 
-<p>
-  <strong>Name:</strong>
-  <%= @state.name %>
-</p>
+			</tr>
 
-<%= link_to 'Edit', edit_state_path(@state) %> |
-<%= link_to 'Back', states_path %>
+			</tbody>
+				</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+	<%= link_to 'Editar', edit_state_path(@state), class: 'btn btn-default' %> 
+	<%= link_to 'Volver', states_path , class: 'btn btn-primary'%>
+</div>			
+

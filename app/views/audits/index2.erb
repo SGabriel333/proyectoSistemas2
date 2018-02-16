@@ -1,0 +1,75 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Auditoria</h1>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">    
+      <!-- Content Header (Page header) -->
+                <div class="box">
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Modelo</th>
+                  <th>Accion</th>
+                  <th>Nombre del usuario</th>
+                  <th>Correo</th>
+                  <th>Fecha</th>
+                </tr>
+                </thead>
+                  <tbody>
+                    <% @audits.each do |audit| %>
+                      <tr>
+            <!--            <td><%= audit.audited_changes%></td> -->
+                        <td><%= audit.auditable_type%></td>
+                        <td><%= audit.action%></td>
+                        <td><%= link_to audit,:remote => true do%><%= User.find(audit.user_id).name%><%end%></td>
+                        <td><%= User.find(audit.user_id).email%></td>
+                        <td><%= audit.created_at %></td>
+                      
+                      </tr>
+                    <% end %>
+                  </tbody>
+                <tfoot>
+                <tr>
+            <!--      <th>Descripcion</th> -->
+                  <th>Modelo</th>
+                  <th>Accion</th>
+                  <th>Nombre del usuario</th>
+                  <th>Correo</th>
+                  <th>Fecha</th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+     
+      <!-- /.row -->
+    </section>
+ <div id='ver' style='display:none;'>
+  </div>
+<script>
+
+  $(function () {
+    $('#example1').DataTable()
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': true,
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : true
+    })
+  })
+  $(function(){
+  $('#example1').tablesorter(); 
+});
+</script>

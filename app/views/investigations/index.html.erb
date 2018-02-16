@@ -1,91 +1,82 @@
-<p id="notice"><%= notice %></p>
-<div class="container col-md-12">
-  <header class="row">
-    <h3 class="col-md-8" style="text-align: center;">Mis trabajos de Investigación.</h3>
-    <h3 class="col-md-4" style="text-align: center;">Archivos adjuntos.</h3>
-  </header>
-  <body>
-    <section class="row">
-      <section class="col-md-8 col-xs-8">
-        <div class="col-md-12 col-xs-12">    
-      <!-- Content Header (Page header) -->
-          <div class="box", style= "height: 400px">
-            <div class="box-body">
-              <table id="tablaInvestigacion" class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Trabajo de Investigación</th>
-                  <th>Fecha de entrega</th>
-                  <th>Usuario</th>
-                  <th>Opciones</th>
-                </tr>
-                </thead>
-                  <tbody>
-                    <% i= 0 %>  
-                    <% @investigations.each do |investigation| %>
-                      <tr>
-                        <td><%= i += 1 %></td>
-                        <td><%= investigation.nombre %></td>
-                        <td><%= investigation.fecha_entrega %></td>
-                        <td><%= investigation.user.email %></td>
-                        <td>
-                          <!--Link para ver recurso.-->
-                          <%= link_to '', investigation, class: 'fa fa-eye btn btn-warning' %>
-                          <!--Link para ver archivos de un recurso.-->
-                          <%= link_to '', show_attacheds_investigation_path(investigation), class: 'fa fa-bars btn btn-success' %>
-                        </td>
-                      </tr>
-                    <% end %>
-                  </tbody>
-              </table>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-        </div>
-        
-      </section>
+  <% if notice != nil %>
+    <p id="notice" class="alert alert-info"><%= notice %></p>
+  <%end%>
+  <div id="new-inv" style='display:none;'></div>
 
-      <section class="col-md-4">
-        <div class="box => caja" style="height: 400px">
-          
-        </div>
-
-      </section>
-    </section>
-  </body>
-</div>
+<section class="col-md-12">
+  <div class="box">
+    <div class="box-header page-header">
+      <h1 style="text-align: center;">Trabajos de Investigación.</h1>
+    </div>
+    <div class="box-body table-responsive">
+      <table id="tablaInvestigacion" class="table table-hover dataTable">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Descripcion</th>
+            <th>Encargado</th>
+            <th>Fecha de Incio</th>
+            <th>Fecha de Fin</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <th>Nombre</th>
+            <th>Descripcion</th>
+            <th>Encargado</th>
+            <th>Fecha de Incio</th>
+            <th>Fecha de Fin</th>
+            <th></th>
+          </tr>
+        </tfoot>
+        <tbody>
+          <% @investigations.each do |investigation| %>
+            <tr>
+              <td><%= investigation.nombre %></td>
+              <td><%= investigation.descripcion %></td>
+              <td><%= investigation.user.name + ' ' + investigation.user.last_name.to_s %></td>
+              <td><%= investigation.fecha_inicio %></td>
+              <td><%= investigation.fecha_fin %></td>
+              <td>
+                <%= link_to investigation do %><i class="btn fa fa-eye btn-default" data-toggle="tooltip" title="Detalles" data-placement="bottom"></i><%end%>
+                <%= link_to edit_investigation_path(investigation, :param => @rol_id), :remote=>true do %><i class="btn btn-default fa fa-pencil" data-toggle="tooltip" title="Editar" data-placement="bottom"></i><%end%>
+                <%= link_to investigation, method: :delete, data: { confirm: 'Are you sure?' } do %><i class="btn btn-default fa fa-close data-toggle="tooltip" title="Eliminar" data-placement="bottom""></i><%end%>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="box-footer">
+      <%= link_to 'Nuevo Trabajo', new_investigation_path(:param => @rol_id), class: 'btn btn-primary', :remote=>true %>
+    </div>
+  </div>
+</section>
 
 <script>
-  $(function () {
-    $('#tablaInvestigacion').DataTable()
-    $('#example2').DataTable({
-      'paging'      : true,
-      'lengthChange': false,
-      'autoWidth'   : false
-    })
-  })
+
+$(document).ready(function() {
+    // Setup - add a text input to each footer cell
+    $('#tablaInvestigacion tfoot th').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text" style="width:75%;"placeholder="Search '+title+'" />' );
+    } );
+ 
+    // DataTable
+    var table = $('#tablaInvestigacion').DataTable();
+ 
+    // Apply the search
+    table.columns().every( function () {
+        var that = this;
+ 
+        $( 'input', this.footer() ).on( 'keyup change', function () {
+            if ( that.search() !== this.value ) {
+                that
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+} );
 </script>
-          
-                
-                
-               
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-              

@@ -1,53 +1,33 @@
 <%= form_for @attached, html: { multipart: true } do |form| %>
-  <% if attached.errors.any? %>
+  <% if @attached.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(attached.errors.count, "error") %> prohibited this attached from being saved:</h2>
+      <h2><%= pluralize(@attached.errors.count, "error") %> prohibited this attached from being saved:</h2>
 
       <ul>
-      <% attached.errors.full_messages.each do |message| %>
+      <% @attached.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div class="col-md-3">
+  <div class="form-group">
+    <%= form.label :descripcion %>
+    <%= form.text_field :descripcion, id: :attached_descripcion, class: 'form-control' %>
   </div>
 
-  <div class="col-md-6">
-    <h1>Nuevo Archivo Adjunto.</h1>
-
-    
-    <div class="form-group">
-      <%= form.label :descripcion %>
-      <%= form.text_field :descripcion, id: :attached_descripcion, class: 'form-control' %>
-    </div>
-   
-
-    <!--
-    <div class="form-group">
-      <%= form.label :fecha_subida %>
-      <%= form.date_select :fecha_subida, id: :attached_fecha_subida %>
-    </div>
-    -->
-
-    <div class="form-group">
-      <%= form.label :investigation_id %>
-      <%= form.select :investigation_id, options_for_select(Investigation.all.map{|c| [c.nombre, c.id]}, :datos_personal_user_id), class: 'custom-select' %>
-    </div>
-
-     <div class="form-group">
-      <%= form.file_field :file, class: 'custom-file-input' %>
-    </div>
- 
-    <div class="actions form-group">
-      <%= form.submit "Crear Archivo Adjunto", class: 'btn btn-primary' %>
-       <%= link_to 'Volver', my_investigations_investigations_path, class: 'btn btn-success' %>
-    </div>
-
-   
+  <div style="display: none;">
+    <%= form.text_field :investigation_id, id: :attached_investigation_id %>
   </div>
 
-  <div class="col-md-3">
+  <div class="form-group">
+    <%= form.file_field :file, class: 'custom-file-input' %>
   </div>
+
+  
+  <div class="actions form-group">
+    <%= form.submit 'Adjuntar', class: 'btn btn-primary' %> 
+    <%= link_to 'Volver', Investigation.find(@attached.investigation_id), class: 'btn btn-success' %>
+  </div>
+
 <% end %>

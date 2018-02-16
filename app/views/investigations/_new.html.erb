@@ -1,0 +1,87 @@
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+<%= form_for @investigation, url: {action: "create"}, html: {id: "form"} do |form| %>
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Nuevo Participante</h4>
+      </div>
+      <div class="modal-body">
+
+  <div class="col-md-12">
+    <div class="col-md-8">
+      <div class="form-group">
+        <%= form.label :nombre %>
+        <%= form.text_field :nombre, id: :investigation_nombre, class: "form-control input" %>
+      </div>
+   
+      <div class="form-group">
+        <%= form.label :descripcion %>
+        <%= form.text_field :descripcion, id: :investigation_descripcion, class: "form-control input" %>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <%= form.label :fecha_inicio, 'Fecha de inicio:' %><br>
+        <%= form.date_select :fecha_inicio, id: :investigation_fecha_inicio %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :fecha_fin, 'Fecha de finalización:' %><br>
+        <%= form.date_select :fecha_fin, id: :investigation_fecha_fin %>
+      </div>  
+
+      <div class="form-group">
+        <%= form.label :user_id, 'Encargado: ' %>
+        <%= form.select :user_id, options_for_select( @users.map{ |u| [ u.name + ' ' + u.last_name.to_s, u.id] }) %>
+      </div>
+    </div>
+  </div>
+  </div>
+  
+
+      <div class="modal-footer" >
+        <%= form.submit "Registrar",class: "btn btn-primary", id: "submit"%>
+         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+     </div>
+     </div>
+     </div>
+<% end %>
+<script>
+$(document).ready(function() {
+    $('.select2').select2();
+    $('#submit').attr('disabled', true);
+    $(".input").keyup(function() {
+      $('#submit').attr('disabled', false);
+        var form = $(this).parents("#form");
+        var check = checkCampos(form);
+        if(check) {
+            $('#submit').attr('disabled', false);
+            $('#comentario').hide();
+        }
+        else {
+            $('#submit').attr('disabled', true);
+            $('#comentario').show();
+        }
+    });
+});
+function checkCampos(obj) {
+    var camposRellenados = true;
+    obj.find(".input").each(function() {
+    var $this = $(this);
+            if( $this.val().length <= 0 ) {
+                camposRellenados = false;
+                return false;
+            }
+    });
+    if(camposRellenados == false) {
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+</script>

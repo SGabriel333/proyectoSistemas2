@@ -11,19 +11,26 @@
     </div>
   <% end %>
 
-  <div class="field">
+<div class="col-md-3"></div>
+
+<div class="col-md-6">
+
+
+
+  <div class="form-group">
     <%= form.label "nombre" %>
-    <%= form.text_field :name, id: :photo_name %>
+    <%= form.text_field :name, id: :photo_name, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label "descripcion" %>
-    <%= form.text_area :description, id: :photo_description %>
+    <%= form.text_area :description, id: :photo_description, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label "extencion" %>
-    <%= form.text_field :extension_id, id: :photo_extension_id %>
+     <%= form.select :extension_id, options_for_select(Extension.all.map{|c| [c.name, c.id]}, :extension_id), class: 'custom-select' 'form-control' %>
+
   </div>
 
   <div class="field">
@@ -31,8 +38,19 @@
     <%= form.file_field :img %>
   </div>
 
-
+<br>
   <div class="actions">
-    <%= form.submit %>
+    <ul class="pull-right">
+    <%= link_to 'Volver', states_path, class: 'btn btn-default'%>
+    <%= form.submit "Agregar Foto",class: 'btn btn-primary'%>
   </div>
+
+  </ul>
+
+</div>
+
+<div class="col-md-3"></div>
 <% end %>
+
+
+

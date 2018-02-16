@@ -1,4 +1,5 @@
 class ParticipantsController < ApplicationController
+  protect_from_forgery with: :null_session
   before_action :set_participant, only: [:show, :edit, :update, :destroy]
 
   # GET /participants
@@ -14,12 +15,18 @@ class ParticipantsController < ApplicationController
 
   # GET /participants/new
   def new
-    @extension_id = params[:id]
+    @extension_id = params[:id] #se obtiene una variable para saber a que extension pertenece el participante
     @participant = Participant.new
+    respond_to do |f|
+      f.js
+    end
   end
 
   # GET /participants/1/edit
   def edit
+    respond_to do |f|
+      f.js
+    end
   end
 
   # POST /participants
@@ -28,8 +35,9 @@ class ParticipantsController < ApplicationController
     @participant = Participant.new(participant_params)
 
     respond_to do |format|
+
       if @participant.save
-        format.html { redirect_to @participant, notice: 'Participant was successfully created.' }
+        format.html { redirect_to request.referrer, notice: 'Participante creado correctamente.' }
         format.json { render :show, status: :created, location: @participant }
       else
         format.html { render :new }
@@ -43,7 +51,7 @@ class ParticipantsController < ApplicationController
   def update
     respond_to do |format|
       if @participant.update(participant_params)
-        format.html { redirect_to @participant, notice: 'Participant was successfully updated.' }
+        format.html { redirect_to request.referrer, notice: 'Participante editado correctamente.' }
         format.json { render :show, status: :ok, location: @participant }
       else
         format.html { render :edit }
@@ -70,6 +78,6 @@ class ParticipantsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def participant_params
-      params.require(:participant).permit(:hours, :student_id, :extension_id)
+      params.require(:participant).permit(:hours, :student_id, :extension_id, :student_type_id)
     end
 end

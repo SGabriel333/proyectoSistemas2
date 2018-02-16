@@ -1,17 +1,15 @@
 <header class="row">
-    <h3 style="text-align: center;">Encargados</h3>
+    <h3 style="text-align: center;">Encargados</h3>fdf
 </header>
     <div class="box">
       <div class="box-header with-border">
       </div>
       <!-- /.box-header -->
       <div class="box-body">
-        <table class="table table-responsive table-bordered">
-          <tbody>
+        <table class="table table-responsive table-hover">
+          <tbody class="dark">
             <tr>
               <th style="width: 200px">Nombre</th>
-              <th style="width: 200px">Descripción</th>
-              <th style="width: 150px">Dirección</th>
               <th style="width: 200px">Email</th>
               <th style="width: 150px">Teléfono</th>
               <th style="width: 150px">Opciones</th>
@@ -19,13 +17,11 @@
             <% @managers.each do |manager| %>
               <tr>
                 <td><%= manager.name %></td>
-                <td><%= manager.description %></td>
-                <td><%= manager.place %></td>
                 <td><%= manager.email %></td>
                 <td><%= manager.phone %></td>
                 <td>
-                  <%= link_to '', edit_manager_path(manager), class: 'btn btn-info fa fa-edit'%>
-                  <%= link_to '', manager, class: 'fa fa-close btn btn-danger', method: :delete, data: {confirm: '¿Estas seguro?'}%>
+                  <%= link_to '', edit_manager_path(manager), class: 'btn btn-default fa fa-pencil'%>
+                  <%= link_to '', manager, class: 'fa fa-close btn btn-default', method: :delete, data: {confirm: '¿Estas seguro?'}%>
                 </td>
               </tr>
             <% end %>
@@ -37,7 +33,7 @@
       <div class="box-footer clearfix">
         <ul class="pagination pagination-sm no-margin pull-left">
           <li>
-            <%= link_to new_manager_path do%>
+            <%= link_to new_manager_path, :remote=>true do%>
               <button type="button" class="btn btn-primary">Agregar Encargado</button>
             <%end%>
           </li>

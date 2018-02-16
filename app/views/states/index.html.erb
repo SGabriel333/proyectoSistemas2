@@ -16,8 +16,8 @@
               <tr>
                 <td><%= state.name %></td>
                 <td>
-                  <%= link_to '', edit_state_path(state), class: 'btn btn-info fa fa-edit'%>
-                  <%= link_to '', state, class: 'fa fa-close btn btn-danger', method: :delete, data: {confirm: '¿Estas seguro?'}%>
+                  <%= link_to '', edit_state_path(state), class: 'btn btn-default fa fa-pencil'%>
+                  <%= link_to '', state, class: 'fa fa-close btn btn-default', method: :delete, data: {confirm: '¿Estas seguro?'}%>
                 </td>
               </tr>
             <% end %>

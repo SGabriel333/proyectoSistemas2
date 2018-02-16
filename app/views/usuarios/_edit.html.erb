@@ -1,0 +1,105 @@
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+<%= form_for @user, url: {action: "update"}, html: {id: "f",:class => "form-horizontal center"} do |form| %>
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Editar Usuario</h4>
+      </div>
+      <div class="modal-body">
+
+<form class="form-horizontal" name="commentform" method="post">        
+  <section class="main row">
+       <div class="form-group">
+          <%= form.label :name, class: "col-md-4 control-label" %>
+          <div class="col-md-6">
+              <%= form.text_field :name, class: 'form-control input1' %>
+           </div>
+      </div>   
+      
+      <div class="form-group">
+          <%= form.label :last_name, "Apellido:", class: "col-md-4 control-label" %>
+          <div class="col-md-6">
+              <%= form.text_field :last_name, class: "form-control input1" %>
+          </div>
+      </div>
+
+     <div class="form-group">
+        <%= form.label :email, "Correo Electronico:", class: "col-md-4 control-label" %>
+        <div class="col-md-6">
+            <%= form.text_field :email,autofocus: true, class: "form-control input1" %>
+        </div>
+     </div>
+
+         <%if @user==current_user%>
+         <div class="form-group">
+        <%= form.label "Contraseña", class: "col-md-4 control-label" %>
+       
+      <div class="col-md-6">
+      <%= form.password_field :password, autocomplete: "off",class: "form-control input1",placeholder: "antigua o nueva contraseña" %>
+      </div>
+    </div>
+
+      <div class="form-group">
+      <%= form.label "Confirmar contraseña",class: "col-md-4 control-label" %>
+      <div class="col-md-6">
+      <%= form.password_field :password_confirmation, autocomplete: "off",class: "form-control input1"%>
+      </div>
+      </div>
+      <%else%>
+      <%end%>
+
+      <div class="form-group">
+          <%= form.label "Cargo",class: "col-md-4 control-label" %>
+          <div class="col-md-6">  
+          <%= select_tag :role, options_from_collection_for_select(Role.all,"name","name"),class: "form-control"%>
+          </div>
+    </div>
+  </section>
+  </div>
+      <div class="modal-footer">
+        <%= form.submit "Guardar",class: "btn btn-primary", id: "submit"%>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+<%end%>
+
+<script>
+$(document).ready(function() {
+    $('.select2').select2();
+    $('#submit').attr('disabled', true);
+    $(".input1").keyup(function() {
+      $('#submit').attr('disabled', false);
+        var form = $(this).parents("#f");
+        var check = checkCampos(form);
+        if(check) {
+            $('#submit').attr('disabled', false);
+            $('#comentario').hide();
+        }
+        else {
+            $('#submit').attr('disabled', true);
+            $('#comentario').show();
+        }
+    });
+});
+function checkCampos(obj) {
+    var camposRellenados = true;
+    obj.find(".input1").each(function() {
+    var $this = $(this);
+            if( $this.val().length <= 0 ) {
+                camposRellenados = false;
+                return false;
+            }
+    });
+    if(camposRellenados == false) {
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
+</script>

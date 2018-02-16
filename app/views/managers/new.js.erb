@@ -1,3 +1,10 @@
-$('#new-manager').html("<%= j (render 'new') %>")
-$('#myModal').modal('show')
-$('#new-manager').slideDown(350)
+$('#new-manager').html('<%= j (render 'new') %>');
+$('#myModal').modal('show');
+$('#new-manager').slideDown(10);
+$('#myModal').on('hidden.bs.modal', function()
+	{
+		$('form').submit();
+		form_submitted = false;
+		location.reload(false);
+	}
+ );

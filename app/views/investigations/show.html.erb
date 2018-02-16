@@ -1,24 +1,83 @@
-<p id="notice"><%= notice %></p>
+  <% if notice != nil %>
+    <p id="notice" class="alert alert-info"><%= notice %></p>
+  <%end%>
 
-<p>
-  <strong>Nombre:</strong>
-  <%= @investigation.nombre %>
-</p>
+  <div class="invoice">
+    <section class="cabecera col-md-12">
+      <h2 class="page-header text-uppercase col-md-12 col-sm-12">
+        <div class="col-md-6 col-sm-12">  
+          <i class="fa fa-book"></i>
+          <%= @investigation.nombre %>
+        </div>  
+        <div class="col-md-6 col-sm-12">  
+          <div class="pull-right fixed-top ">
+            <small>Fecha de inicio: <%= @investigation.fecha_inicio %></small><br>
+            <small>Fecha de finalización: <%= @investigation.fecha_fin %></small>
+          </div>
+        </div>  
+      </h2>
 
-<p>
-  <strong>Descripcion:</strong>
-  <%= @investigation.descripcion %>
-</p>
+      <div class="col-md-12">
+        <p>
+          <strong>Encargado: </strong>
 
-<p>
-  <strong>Fecha de entrega:</strong>
-  <%= @investigation.fecha_entrega %>
-</p>
+          <%= @investigation.user.name + ' ' + @investigation.user.last_name %>
+        </p>
+      </div>
 
-<p>
-  <strong>Usuario:</strong>
-  <%= @investigation.user.email %>
-</p>
+      <div class="col-md-10">      
+        <p class="text-justify">
+          <strong>Descripcion:</strong><br>
+          <%= @investigation.descripcion %>
+        </p>
+      </div>
 
-<%= link_to 'Editar', edit_investigation_path(@investigation) %> |
-<%= link_to 'Back', investigations_path %>
+      <div class="col-md-2">
+        <%= link_to 'Adjuntar Archivo', new_attached_path(:var => @investigation.id) , class: 'btn btn-primary' %>
+      </div>  
+
+    </section>
+    <section class="box col-md-12">
+      <section class="box-body table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Descripción</th>
+              <th>Fecha de subida</th>
+              <th colspan="2" style="text-align: center;">Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @attacheds.each do |attached| %>
+            <tr>
+              <td><%= attached.descripcion %></td>
+              <td><%= attached.fecha_subida %></td>
+              <td>
+                <span>
+                  <%= link_to attached.file.url do %><i class="btn btn-default fa fa-arrow-down" data-toggle="tooltip" title="Descargar Archivo" data-placement="bottom"></i><%end%>
+                </span>
+                <span>
+                  <%= link_to edit_attached_path(attached) do %><i class="btn btn-default fa fa-pencil" data-toggle="tooltip" title="Editar" data-placement="bottom"></i><%end%>
+                </span>
+                <span>
+                  <%= link_to attached, method: :delete, data: { confirm: 'Are you sure?' } do %><i class="btn btn-default fa fa-close data-toggle="tooltip" title="Eliminar" data-placement="bottom""></i><%end%>
+                </span> 
+                
+              </td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </section>
+      <section class="box-footer">
+        <p class="text-muted">Archivos adjuntos del trabajo de investigación.</p>
+      </section>
+    </section>
+    <%= link_to 'Editar', edit_investigation_path(@investigation), class: 'btn btn-primary' %> 
+    <%= link_to 'Volver', investigations_path, class: 'btn btn-success' %>
+    
+  </div>
+
+
+
+

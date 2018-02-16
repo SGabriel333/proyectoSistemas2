@@ -2,13 +2,12 @@
 
 <h1>Attacheds</h1>
 
-<table class="col-md-12">
+<table>
   <thead>
     <tr>
       <th>Descripcion</th>
       <th>Fecha subida</th>
       <th>Investigation</th>
-      <th>Link del archivo</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -18,8 +17,7 @@
       <tr>
         <td><%= attached.descripcion %></td>
         <td><%= attached.fecha_subida %></td>
-        <td><%= attached.investigation.nombre %></td>
-        <td><%= link_to attached.descripcion, attached.file.url %></td>
+        <td><%= attached.investigation %></td>
         <td><%= link_to 'Show', attached %></td>
         <td><%= link_to 'Edit', edit_attached_path(attached) %></td>
         <td><%= link_to 'Destroy', attached, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -28,6 +26,7 @@
   </tbody>
 </table>
 
-<br>
-<%= Date.today.to_s %>
 <%= link_to 'New Attached', new_attached_path %>
+<br>
+
+

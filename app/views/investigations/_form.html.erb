@@ -1,5 +1,4 @@
 
-
 <%= form_with(model: investigation, local: true) do |form| %>
   <% if investigation.errors.any? %>
     <div id="error_explanation">
@@ -13,38 +12,41 @@
     </div>
   <% end %>
 
-  <div class="row">
-    <div class= 'col-sm-3 col-md-3'>
-    </div>
-
-    <div class= 'col-sm-6 col-md-6'>
-      <h1>Nuevo Trabajo de Investigacion.</h1>
-
+  <div class="col-md-12">
+    <div class="col-md-8">
       <div class="form-group">
         <%= form.label :nombre %>
-        <%= form.text_field :nombre, id: :investigation_nombre, class: 'form-control' %>
+        <%= form.text_field :nombre, id: :investigation_nombre, class: "form-control" %>
       </div>
-
+   
       <div class="form-group">
         <%= form.label :descripcion %>
-        <%= form.text_field :descripcion, id: :investigation_descripcion, class: 'form-control' %>
+        <%= form.text_field :descripcion, id: :investigation_descripcion, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <%= form.label :fecha_inicio, 'Fecha de inicio:' %><br>
+        <%= form.date_select :fecha_inicio, id: :investigation_fecha_inicio %>
       </div>
 
       <div class="form-group">
-        <%= form.label :fecha_entrega, "Fecha de entrega: " %>
-        <%= form.date_select :fecha_entrega, id: :investigation_fecha_entrega, class: 'custom-select' %>
+        <%= form.label :fecha_fin, 'Fecha de finalización:' %><br>
+        <%= form.date_select :fecha_fin, id: :investigation_fecha_fin %>
+      </div>  
+
+      <div class="form-group">
+        <%= form.label :user_id, 'Encargado: ' %>
+        <%= form.select :user_id, options_for_select( @users.map{ |u| [ u.name + ' ' + u.last_name.to_s, u.id] }) %>
       </div>
-
-     
-
-      <div class="actions form-group">
-        <%= form.submit "Guardar" , class: 'btn btn-primary' %>
-        <%= link_to 'Volver', my_investigations_investigations_path, class: 'btn btn-success' %>
-      </div>
-
-    </div>
-    
-    <div class= 'col-sm-3 col-md-3'>
     </div>
   </div>
+
+  <div class="col-md-12">
+    <div class="actions form-group">
+      <%= form.submit 'Crear', class: 'btn btn-primary' %>
+      <%= link_to 'Volver', investigations_path, class: 'btn btn-success' %>
+    </div>
+  </div>  
 <% end %>

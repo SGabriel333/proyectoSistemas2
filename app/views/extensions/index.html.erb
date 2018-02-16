@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title></title>
-</head>
-<body>
+<div>
+
     <header class="row">
-    <h3 style="text-align: center;">Proyectos</h3>
       <% if @extension_type.name == "Activity"%>
         <h1 style="text-align: center;">Actividades</h1>
       <% elsif @extension_type.name == "Proyect"%>
@@ -14,13 +9,14 @@
         <h1 style="text-align: center;">Servicios</h1>
       <% end %>
     </header>
+    <br/>
     <div class="box">
       <div class="box-header with-border">
       </div>
       <!-- /.box-header -->
       <div class="box-body">
-        <table class="table table-responsive table-bordered">
-          <tbody>
+      <table id="example1" class="table table-bordered table-striped">
+          <thead>
             <tr>
               <th style="width: 200px">Nombre</th>
               <th style="width: 200px">Descripción</th>
@@ -29,6 +25,8 @@
               <th style="width: 150px">Fecha Fin</th>
               <th style="width: 150px">Opciones</th>
             </tr>
+            </thead>
+            <tbody>
             <% @extensions.each do |extension| %>
               <tr>
                 <td><%= extension.name %></td>
@@ -37,26 +35,26 @@
                 <td>
                   <% if extension.state.name == "en curso"%>
                     <%= extension.state.name %>
-                    <div class="progress progress-sm progress-striped active">
-                      <div class="progress-bar progress-bar-primary" style="width: 55%"></div>
+                    <div class="progress progress-xs progress-striped active">
+                      <div class="progress-bar progress-bar-primary" style="width: 50%"></div>
                     </div>
                   <% elsif extension.state.name == "culminado" %>
                     <%= extension.state.name %>
-                    <div class="progress progress-sm">
+                    <div class="progress progress-xs">
                       <div class="progress-bar progress-bar-success" style="width: 100%"></div>
                     </div>
                   <% elsif extension.state.name == "en espera" %>
                     <%= extension.state.name %>
-                    <div class="progress progress-sm">
-                      <div class="progress-bar progress-bar-yellow" style="width: 55%"></div>
+                    <div class="progress progress-xs progress-striped active">
+                      <div class="progress-bar progress-bar-yellow" style="width: 50%"></div>
                     </div>
                   <% end %>
                 </td>
                 <td><%= extension.date_end %></td>
                 <td>
-                  <%= link_to 'Ver', extension %>
-                  <%= link_to '', edit_extension_path(extension), class: 'btn btn-info fa fa-edit'%>
-                  <%= link_to '', extension, class: 'fa fa-close btn btn-danger', method: :delete, data: {confirm: '¿Estas seguro?'}%>
+                  <%= link_to '', extension,class: 'btn btn-default fa fa-eye' %>
+                  <%= link_to '', edit_extension_path(extension), class: 'btn btn-default fa fa-pencil', :remote=>true%>
+                  <%= link_to '', extension, class: 'btn btn-default fa fa-close', method: :delete, data: {confirm: '¿Estas seguro?'}%>
                 </td>
               </tr>
             <% end %>
@@ -68,9 +66,7 @@
       <div class="box-footer clearfix">
         <ul class="pagination pagination-sm no-margin pull-left">
           <li>
-            <%= link_to new_extension_path do%>
-              <button type="button" class="btn btn-primary">Agregar Proyecto</button>
-            <%= link_to new_extension_path(:id => @extension_type.id) do%>
+              <%= link_to new_extension_path(:id => @extension_type.id), :remote=>true do%>
               <% if @extension_type.name == "Activity" %>
                 <button type="button" class="btn btn-primary">Agregar Actividad</button>
               <% elsif @extension_type.name == "Proyect" %>
@@ -83,6 +79,20 @@
         </ul>
       </div>
     </div>
+</div>
 
-</body>
-</html>
+<div id="new-ext" style="display:none;"></div>
+
+
+<script>
+  $(function () {
+    $('#example1').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+    })
+  })
+</script>

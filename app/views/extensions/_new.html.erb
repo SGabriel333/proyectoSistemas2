@@ -1,0 +1,123 @@
+<%= form_for @extension, url: {action: "create"}, html: {id: "form"} do |form| %>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+<div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+
+<form class="form-horizontal" name="commentform" method="post">        
+  <section class="main row">
+    <div class="col-md-2"></div>
+    <div class="col-md-4">
+      <div class="form-group">
+      <%= form.label "Nombre" %>
+      <%= form.text_field :name, id: :extension_name, class: 'form-control input' %>
+      </div>
+
+      <div class="form-group">
+      <%= form.label "Descripcion" %>
+      <%= form.text_field :description, id: :extension_description, class: 'form-control input' %>
+      </div>
+
+      <!-- Formulario para encargado del proyecto -->
+      <div class="form-group">
+        <%= form.label "Encargado" %>
+        <br/>
+        <%= form.select :manager_id, options_for_select(Manager.all.map{|c| [c.name, c.id]}, :extension_manager_id), class: 'custom-select' 'form-control' %>
+        <%= link_to new_manager_path do%>
+        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+          <i class="fa fa-plus"></i>
+        </button>
+        <%end%>
+             
+      </div>
+    </div>
+
+    <!-- Columna para otros formularios -->
+    <div class="col-md-4">
+      <div class="form-group">
+        <%= form.label "Fecha inicio" %><br/>
+        <%= form.date_select :date_start, id: :extension_date_start%>
+      </div>
+      <div class="form-group">
+
+        <!-- /.input group -->
+      </div>
+
+      <div class="form-group">
+        <%= form.label "Fecha fin " %><br/>
+        <%= form.date_select :date_end, id: :extension_date_end %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label "Estado" %><br/>
+        <%= form.select :state_id, options_for_select(State.all.map{|c| [c.name, c.id]}, :extension_state_id), class: 'custom-select' %>
+      </div>
+
+      <div style="display: none">
+        <%= form.text_field :extension_type_id, id: :extension_extension_type_id %>
+      </div>
+
+    </div>
+    <div class="col-md-2"></div>
+  </section>
+  <section class="main row">
+    <div class="col-md-2"></div>
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      
+    </div>
+    <div class="col-md-2"></div>
+  </section>
+  
+
+
+      </div>
+      <div class="modal-footer">
+        <%= form.submit "Crear",class: "btn btn-primary", id: "submit"%>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
+<%end%>
+<script>
+$(document).ready(function() {
+    $('.select2').select2();
+    $('#submit').attr('disabled', true);
+    $(".input").keyup(function() {
+      $('#submit').attr('disabled', false);
+        var form = $(this).parents("#form");
+        var check = checkCampos(form);
+        if(check) {
+            $('#submit').attr('disabled', false);
+            $('#comentario').hide();
+        }
+        else {
+            $('#submit').attr('disabled', true);
+            $('#comentario').show();
+        }
+    });
+});
+function checkCampos(obj) {
+    var camposRellenados = true;
+    obj.find(".input").each(function() {
+    var $this = $(this);
+            if( $this.val().length <= 0 ) {
+                camposRellenados = false;
+                return false;
+            }
+    });
+    if(camposRellenados == false) {
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+</script>
