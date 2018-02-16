@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :password_resets
+  resources :participants
   resources :photos
   resources :documents
   resources :managers
@@ -20,6 +22,7 @@ Rails.application.routes.draw do
   resources :extensions do
     member do
       get :show_documents
+      get :show_photos  
     end
     collection do
       get :activities
@@ -27,18 +30,18 @@ Rails.application.routes.draw do
       get :services
     end
   end
-  resources :extensions do
+  resources :usuarios do
     member do
-      get :show_photos
+      get :show_investigator
+    end
+    collection do
+      get :investigators
     end
   end
-  resources :usuarios
   resources :role
   resources :audits
   devise_for :users
-
-  get "managers" => 'managers', :as => :m_managers
-
   root to: 'home#index'
+ 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

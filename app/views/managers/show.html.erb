@@ -1,29 +1,43 @@
 <p id="notice"><%= notice %></p>
+<div class="invoice">  
+<h1>Detalle de Encargado </h1>
+<section class="content">
+      <div class="row">
+        <div class="col-xs-12">    
+          <!-- Content Header (Page header) -->
+          <div class="box">
+          
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example1" class="table table-hover table-striped">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Descripcion</th>
+                    <th>Cargo</th>
+                    <th>Email</th>
+                    <th>Telefono</th>
+                  </tr>
+                </thead>
+                <tbody>
+            <tr>
 
-<p>
-  <strong>Name:</strong>
-  <%= @manager.name %>
-</p>
+            <td>  <%= @manager.name %></td>
+            <td>  <%= @manager.description %></td>
+            <td>  <%= @manager.place %></td>
+            <td>  <%= @manager.email %></td>
+            <td>  <%= @manager.phone %></td>
 
-<p>
-  <strong>Description:</strong>
-  <%= @manager.description %>
-</p>
+      </tr>
 
-<p>
-  <strong>Place:</strong>
-  <%= @manager.place %>
-</p>
+      </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-<p>
-  <strong>Email:</strong>
-  <%= @manager.email %>
-</p>
-
-<p>
-  <strong>Phone:</strong>
-  <%= @manager.phone %>
-</p>
-
-<%= link_to 'Edit', edit_manager_path(@manager) %> |
-<%= link_to 'Back', managers_path %>
+  <%= link_to 'Editar', edit_manager_path(@manager), class: 'btn btn-default' %> 
+  <%= link_to 'Volver', managers_path , class: 'btn btn-primary'%>
+</div>  

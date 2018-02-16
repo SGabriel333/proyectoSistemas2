@@ -16,28 +16,28 @@
 <div class="col-md-6">
   <div class="form-group">
     <%= form.label "Nombre" %>
-    <%= form.text_field :name, id: :manager_name %>
+    <%= form.text_field :name, id: :manager_name , class: 'form-control' %>
   </div>
 
   <div class="form-group">
     <%= form.label "Descripción" %>
-    <%= form.text_field :description, id: :manager_description %>
+    <%= form.text_field :description, id: :manager_description, class: 'form-control'  %>
   </div>
 
   <div class="form-group">
     <%= form.label "Dirección" %>
-    <%= form.text_field :place, id: :manager_place %>
+    <%= form.text_field :place, id: :manager_place , class: 'form-control' %>
   </div>
 
   <div class="form-group">
   <div class="field">
     <%= form.label :email %>
-    <%= form.text_field :email, id: :manager_email %>
+    <%= form.text_field :email, id: :manager_email , class: 'form-control' %>
   </div>
 
   <div class="form-group">
     <%= form.label "Teléfono" %>
-    <%= form.text_field :phone, id: :manager_phone %>
+    <%= form.text_field :phone, id: :manager_phone, class: 'form-control'  %>
   </div>
 
   <div class="actions">

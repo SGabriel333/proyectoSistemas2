@@ -15,5 +15,44 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require adminlte
+
+//= require bootstrap-datepicker
+//= require bootstrap-datepicker/core
+//= require bootstrap-datepicker/locales/bootstrap-datepicker.es.js
+//= require select2.full.js
+//= require select2.js
+//= require jspdf.js
 //= require jquery.dataTables.min.js
 //= require dataTables.bootstrap.min.js
+
+
+
+$(document).ready(function() {
+    $(".input").keyup(function() {
+      $('#submit').attr('disabled', false);
+        var form = $(this).parents("#form");
+        var check = checkCampos(form);
+        if(check) {
+            $('#submit').attr('disabled', false);
+        }
+        else {
+            $('#submit').attr('disabled', true);
+        }
+    });
+});
+function checkCampos(obj) {
+    var camposRellenados = true;
+    obj.find(".input1").each(function() {
+    var $this = $(this);
+            if( $this.val().length <= 0 ) {
+                camposRellenados = false;
+                return false;
+            }
+    });
+    if(camposRellenados == false) {
+        return false;
+    }
+    else {
+        return true;
+    }
+}

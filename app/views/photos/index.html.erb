@@ -18,9 +18,9 @@
         </li>
 
         <td>            
-            <%= link_to 'Detalle', photo %>
-            <%= link_to 'Editar', edit_photo_path(photo) %>
-            <%= link_to 'Eliminar', photo, method: :delete, data: { confirm: 'Are you sure?' } %>    
+            <%= link_to 'Detalle', photo ,class: 'btn btn-default btn-sm'%>
+            <%= link_to 'Editar', edit_photo_path(photo) ,class: 'btn btn-default btn-sm'%>
+            <%= link_to 'Eliminar', photo, class: 'btn btn-default btn-sm', method: :delete, data: { confirm: 'Are you sure?' } %>    
         </td>
       </ul>
     </div>
@@ -28,4 +28,4 @@
 
 <br>
 
-<%= link_to 'Agregar Foto', new_photo_path %>
+<%= link_to 'Agregar Foto', new_photo_path ,class: 'btn btn-primary'%>

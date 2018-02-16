@@ -1,4 +1,5 @@
 class UniversitariosController < ApplicationController
+  layout 'template'
   before_action :set_universitario, only: [:show, :edit, :update, :destroy]
 
   # GET /universitarios

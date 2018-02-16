@@ -1,0 +1,84 @@
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <%= form_for @student, :html => {:id => "form"}, url: {action: "update"} do |form| %>
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Universitario</h4>
+          </div>
+          <div class="modal-body">
+            <div class= "field">
+              <%= form.label 'Nombre' %>
+              <%= form.text_field :name, id: :student_name, class: 'form-control input1' %>
+            </div>
+
+            <div class="field">
+              <%= form.label 'Apellido'%>
+              <%= form.text_field :lastname, id: :student_last_name, class: 'form-control input1' %>
+            </div>
+
+            <div class="field"> 
+              <%= form.label 'CI' %>
+              <%= form.number_field :ci, id: :student_ci, class: 'form-control input1' %>
+            </div>
+
+            <div class="form-group">
+              <%= form.label "Horas de extension" %>
+              <%= form.number_field :hours, class: 'form-control input1',min: 0%>
+            </div>            
+
+            <div class="field">
+              <%= form.label  'Correo' %>
+              <%= form.text_field :email, id: :student_mail, class: 'form-control input1' %>
+            </div>
+
+            <div class="field" style="display:none;">
+              <%= form.label 'Categoria' %>
+              <%= form.text_field :category_id %>
+            </div>
+            <div class="field">
+              <%= form.label 'Carrera' %>
+              <%= form.select :career_id,  options_for_select(Career.all.map{ |c| [c.name, c.id]}, @student.career_id), {} ,{class: 'form-control',:style => "width:100%;"}%>
+            </div>
+
+            <div class="modal-footer" >
+               <%= form.submit "Editar ",class: "btn btn-primary", id: "submit"%>
+               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<% end %>
+<script>
+$(document).ready(function() {
+    $('.select2').select2();
+    $(".input1").keyup(function() {
+      $('#submit').attr('disabled', false);
+        var form = $(this).parents("#form");
+        var check = checkCampos(form);
+        if(check) {
+            $('#submit').attr('disabled', false);
+        }
+        else {
+            $('#submit').attr('disabled', true);
+        }
+    });
+});
+function checkCampos(obj) {
+    var camposRellenados = true;
+    obj.find(".input1").each(function() {
+    var $this = $(this);
+            if( $this.val().length <= 0 ) {
+                camposRellenados = false;
+                return false;
+            }
+    });
+    if(camposRellenados == false) {
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+</script>

@@ -1,0 +1,10 @@
+$('#participante').html('<%= j  (render "edit")%>');
+$('#myModal').modal({
+              modal: true,
+              buttons: {
+                Ok: function() {
+                  $( this ).modal( "close" );
+                }
+              }
+            });
+$('#participante').slideDown(350);

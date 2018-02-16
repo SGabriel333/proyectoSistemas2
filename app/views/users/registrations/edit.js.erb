@@ -1,0 +1,10 @@
+$('#ver').html('<%= j  (render "edit")%>');
+$('#miModal').modal({
+              modal: true,
+              buttons: {
+                Ok: function() {
+                  $( this ).modal( "close" );
+                }
+              }
+            });
+$('#ver').slideDown(350);

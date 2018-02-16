@@ -1,14 +1,23 @@
 class UsuariosController < ApplicationController
   layout 'template'
    before_action :authenticate_user!
-   before_action :set_user, only: [:show, :edit, :update,:destroy]
-   protect_from_forgery with: :null_session, only: [:show,:create,:update,:destroy]
+   before_action :set_user, only: [:show, :edit, :update,:destroy, :show_investigator]
 
   def index
 		@users=User.all
-    authorize! :read, @user, :message =>'No puede entrar a esta opcion'
+    authorize! :read, @user, :message => 'No puede entrar a esta opcion.'
+
 	end
   
+  def investigators
+    @rol = Role.find_by(:name => params[:param])
+    @investigators = User.with_role @rol.name
+  end
+
+  def show_investigator
+    @rol = params[:param]
+    @investigations = Investigation.where(:user_id => params[:id])
+  end
 
   # GET /user/new
   def new
@@ -19,10 +28,14 @@ class UsuariosController < ApplicationController
   end
 # GET /user/
   def show
+    respond_to do |format|
+        format.js
+    end
   end
 
   # GET /user/1/edit
   def edit
+
   end
 
   # POST /users
@@ -43,21 +56,22 @@ class UsuariosController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
     authorize! :update, @user, :message => "No puedes tienes acceso a esta opcion."
-    if @user.is_admin? 
-      @user.remove_role :admin
-    end
-    if @user.is_adminInv?
-      @user.remove_role :adminInv  
-    end
-    if @user.is_adminExt?
-      @user.remove_role :adminExt
-    end
-    if @user.is_investigador?
-      @user.remove_role :Investigador
-    end
-    @user.add_role(params[:role])
-    @user.update(user_params)        
-    redirect_to usuarios_path, notice: 'Usuario fue actualizado.'
+      if @user.is_admin? 
+         @user.remove_role :admin
+      end
+      if @user.is_adminInv?
+        @user.remove_role :adminInv  
+      end
+      if @user.is_adminExt?
+        @user.remove_role :adminExt
+      end
+      if @user.is_investigador?
+        @user.remove_role :Investigador
+      end
+      
+      @user.add_role(params[:role])
+      @user.update(user_params)
+      redirect_to usuarios_path, notice: 'Usuario fue actualizado.'
   end 
 
   # DELETE Users

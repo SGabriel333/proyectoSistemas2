@@ -1,19 +1,17 @@
 <div class="container">
-	<header>
-		<h3>Archivos de Proyecto</h3>
-	</header>
-	<body class="row">
-		<section class="links col-md-9">
+	
+	<div class="alert alert-success">
+		<h3>Proyecto: <%=@extension.name%> </h3>
+			
+	</div>
+
 			<div class="list-group">
-			<a class="list-group-item active">Proyecto: <%=@extension.name%> </a>
 				<% @document.each do |a| %>
 				<%= 
 					link_to a.name , a.doc.url, class: 'list-group-item list-group-item-action'
 				%>
  			<% end %>
 			</div>
-		</section>
-	</body>
 	<%= link_to 'Nuevo Documento', new_document_path, class: 'btn btn-primary' %>
 </div>
 

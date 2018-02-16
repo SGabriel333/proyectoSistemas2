@@ -1,34 +1,171 @@
-<p id="notice"><%= notice %></p>
+<div id="imprimir">
+  <div align="center">
+      <h5 align="center">Dirección de Extensión e Investigación</h5>
+      <h5 align="center">Facultad de Ingeniería - UNI</h5>
+  </div>
+       
+<div class="invoice">
+<h4>A- IDENTIFICACIÓN PERSONAL</h4>
 
-<p>
-  <strong>Name:</strong>
-  <%= @student.name %>
-</p>
-
-<p>
-  <strong>Lastname:</strong>
-  <%= @student.lastname %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @student.email %>
-</p>
-
-<p>
-  <strong>Ci:</strong>
-  <%= @student.ci %>
-</p>
-
-<p>
-  <strong>Hours:</strong>
-  <%= @student.hours %>
-</p>
-
-<p>
-  <strong>Career:</strong>
-  <%= @student.career %>
-</p>
-
+<table  class="table">
+<tr>
+  <th>Nombres y Apellidos:</th>
+  <td><%= @student.name + " " + @student.lastname %></td>
+</tr>
+<tr>
+  <th>Nº C.I.:</th>
+  <td><%= @student.ci %></td>
+</tr>
+<tr>
+  <th>Carrera:</th>
+  <td><%= @student.career.name %></td>
+</tr>
+<tr>
+  <th>e-mail:</th>
+  <td><%= @student.email %></td>
+</tr>
+<tr>
+  <th>Horas totales:</th>
+  <td><%= @student.hours %></td>
+</tr>
+</table>
+</div>
+ <div class="invoice"> 
+  <h4>B- ACTIVIDADES DE EXTENSIÓN UNIVERSITARIA</h4>
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">    
+      <!-- Content Header (Page header) -->
+          <div class="box">
+          
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table  class="table">
+                <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Descripcion</th>
+                  <th>Estado</th>
+                  <th>Fecha inicio</th>
+                  <th>Fecha fin</th>
+                </tr>
+                </thead>
+                  <tbody>
+                    <% Student.univ_extension(@student.id).each do |extension| %>
+                    <tr>
+                      <td><%= link_to extension.name, extension_path(extension.id)%></td>
+                      <td><%= extension.description %></td>
+                      <td><%= extension.state_id %></td>
+                      <td><%= extension.date_start %></td>
+                      <td><%= extension.date_end %></td>
+                    <% end %>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+      </div>
+    </section>
+  </div>
+</div>
 <%= link_to 'Editar', edit_student_path(@student) %> |
 <%= link_to 'Atras', students_path %>
+<button id="descargar">descargar</button>
+<script>
+  $(function () {
+    $('#example1').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+    })
+  });
+  var base64Img = null;
+
+
+margins = {
+  top: 70,
+  bottom: 40,
+  left: 30,
+  width: 550
+};
+
+$('#descargar').click(function()
+{
+  var logo = new Image();
+  var logo2 = new Image();
+
+  logo.src = '<%=image_path("logo2.png")%>';
+  logo2.src = '<%=image_path("FIUNI2.png")%>';
+            logo.onload = function() {
+            if (this.width>0) {
+                 console.log(this.width);
+                 //TODO: upload to backend
+            }
+        };
+                  logo2.onload = function() {
+            if (this.width> 0) {
+                 console.log(this.width);
+                 //TODO: upload to backend
+            }
+        };
+  var pdf = new jsPDF('p', 'pt', 'letter');
+  pdf.addImage(logo, 'png', 15, 34,60,60);
+  pdf.setFontSize(18);
+  pdf.addImage(logo2, 'png', 525, 40,50,50);
+  pdf.fromHTML(document.getElementById('imprimir'), 
+    margins.left, // x coord
+    margins.top,
+    {
+      // y coord
+      width: margins.width// max width of content on PDF
+    },function(dispose) {
+      pdf.save('Detalle_proyecto.pdf');
+    }, 
+    margins);
+
+
+
+});
+function headerFooterFormatting(doc, totalPages)
+{
+    for(var i = totalPages; i >= 1; i--)
+    {
+        doc.setPage(i);                            
+        //header
+        header(doc);
+        
+        footer(doc, i, totalPages);
+        doc.page++;
+    }
+};
+
+function header(doc)
+{
+    doc.setFontSize(30);
+    doc.setTextColor(40);
+    doc.setFontStyle('normal');
+  
+    if (base64Img) {
+       doc.addImage(base64Img, 'JPEG', margins.left, 10, 40,40);        
+    }
+      
+    doc.text("", margins.left + 50, 40 );
+};
+
+// You could either use a function similar to this or pre convert an image with for example http://dopiaza.org/tools/datauri
+// http://stackoverflow.com/questions/6150289/how-to-convert-image-into-base64-string-using-javascript
+
+
+function footer(doc, pageNumber, totalPages){
+
+    var str = "Page " + pageNumber + " of " + totalPages
+   
+    doc.setFontSize(10);
+    doc.text(str, margins.left, doc.internal.pageSize.height - 20);
+    
+};
+</script>

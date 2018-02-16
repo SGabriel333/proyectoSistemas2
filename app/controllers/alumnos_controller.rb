@@ -1,4 +1,5 @@
 class AlumnosController < ApplicationController
+  layout 'template'
   before_action :set_alumno, only: [:show, :edit, :update, :destroy]
 
   # GET /alumnos

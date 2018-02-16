@@ -1,6 +1,9 @@
-<h1>Editing Document</h1>
+<h1>Editar Documentos</h1>
 
 <%= render 'form', document: @document %>
 
-<%= link_to 'Show', @document %> |
-<%= link_to 'Back', documents_path %>
+<br>
+<div>
+<%= link_to 'Ver', @document ,class: 'btn btn-default btn-sm'%> |
+<%= link_to 'Volver', documents_path , class: 'btn btn-default btn-sm''%>
+</div>

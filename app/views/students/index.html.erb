@@ -1,6 +1,6 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Universitarios</h1>
+  <div class="invoice">
+<div class="page-header"><%= Category.find(@category_id).name %></div>
+  <div id="estudiante" style="display:none;"></div>
 
  <!-- Main content -->
     <section class="content">
@@ -20,9 +20,7 @@
                   <th>Correo</th>
                   <th>Horas de Extension</th>
                   <th>Carrera</th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
+                  <th>Opciones</th>
                 </tr>
                 </thead>
                   <tbody>
@@ -34,25 +32,13 @@
                         <td><%= student.email %></td>
                         <td><%= student.hours %></td>
                         <td><%= student.career.name %></td>
-                        <td><%= link_to 'Show', student %></td>
-                        <td><%= link_to 'Edit', edit_student_path(student) %></td>
-                        <td><%= link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                        <td>
+                        <%= link_to '', student, class: 'btn btn-default fa fa-eye'%>
+                        <%= link_to '', edit_student_path(student), class: 'btn btn-default fa fa-pencil', :remote=>true %>
+                        <%= link_to '', student, class: 'btn btn-default fa fa-close', method: :delete, data: { confirm: 'Are you sure?' } %></td>
                       </tr>
                     <% end %>
                   </tbody>
-                <tfoot>
-                <tr>
-                  <th>Nombre</th>
-                  <th>Apellido</th>
-                  <th>CI</th>
-                  <th>Correo</th>
-                  <th>Horas de Extension</th>
-                  <th>Carrera</th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                </tr>
-                </tfoot>
               </table>
             </div>
             <!-- /.box-body -->
@@ -63,11 +49,9 @@
       </div>
       <!-- /.row -->
     </section>
-
 <script>
   $(function () {
-    $('#example1').DataTable()
-    $('#example2').DataTable({
+    $('#example1').DataTable({
       'paging'      : true,
       'lengthChange': false,
       'searching'   : true,
@@ -77,4 +61,8 @@
     })
   })
 </script>
-<%= link_to 'Nuevo universitario', new_student_path, class: 'btn  btn-primary' %>
+
+<%= link_to 'Nuevo universitario', new_student_path(:category_id => @category_id), class: 'btn  btn-primary', :remote=>true %>
+
+
+

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171123032050) do
+ActiveRecord::Schema.define(version: 20180202165652) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -122,6 +122,7 @@ ActiveRecord::Schema.define(version: 20171123032050) do
     t.bigint "manager_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "hours"
     t.bigint "extension_type_id"
     t.index ["extension_type_id"], name: "index_extensions_on_extension_type_id"
     t.index ["manager_id"], name: "index_extensions_on_manager_id"
@@ -134,11 +135,10 @@ ActiveRecord::Schema.define(version: 20171123032050) do
     t.datetime "updated_at", null: false
   end
 
-   create_table "investigations", force: :cascade do |t|
+  create_table "investigations", force: :cascade do |t|
     t.string "nombre"
     t.string "descripcion"
-    t.date "fecha_inicio"
-    t.date "fecha_fin"
+    t.date "fecha_entrega"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -153,6 +153,18 @@ ActiveRecord::Schema.define(version: 20171123032050) do
     t.string "phone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "participants", force: :cascade do |t|
+    t.bigint "student_id"
+    t.bigint "extension_id"
+    t.integer "hours"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "student_type_id"
+    t.index ["extension_id"], name: "index_participants_on_extension_id"
+    t.index ["student_id"], name: "index_participants_on_student_id"
+    t.index ["student_type_id"], name: "index_participants_on_student_type_id"
   end
 
   create_table "photos", force: :cascade do |t|
@@ -185,12 +197,18 @@ ActiveRecord::Schema.define(version: 20171123032050) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "student_types", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "participant"
+  end
+
   create_table "students", force: :cascade do |t|
     t.string "name"
     t.string "lastname"
     t.string "email"
     t.string "ci"
-    t.string "hours"
+    t.integer "hours"
     t.bigint "career_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -224,6 +242,9 @@ ActiveRecord::Schema.define(version: 20171123032050) do
     t.datetime "updated_at", null: false
     t.string "name"
     t.string "last_name"
+    t.string "password_reset_token"
+    t.datetime "password_reset_sent_at"
+    t.string "auth_token"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -246,6 +267,9 @@ ActiveRecord::Schema.define(version: 20171123032050) do
   add_foreign_key "extensions", "managers"
   add_foreign_key "extensions", "states"
   add_foreign_key "investigations", "users"
+  add_foreign_key "participants", "extensions"
+  add_foreign_key "participants", "student_types"
+  add_foreign_key "participants", "students"
   add_foreign_key "photos", "extensions"
   add_foreign_key "students", "careers"
   add_foreign_key "universitarios", "carreras"

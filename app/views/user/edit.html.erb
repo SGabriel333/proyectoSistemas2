@@ -15,7 +15,6 @@
   </div>
 
 
-
   <div class="field">
     <%= f.label "Contraseña" %> <i>(Deja en blanco si no deseas cambiar tu contraseña)</i><br />
     <%= f.password_field :password, autocomplete: "off" %>
@@ -30,10 +29,6 @@
     <%= f.password_field :password_confirmation, autocomplete: "off" %>
   </div>
 
-  <div class="field">
-    <%= f.label "Nueva contraseña" %> <i>(Necesitamos tu nueva contraseña para confirmar los cambios)</i><br />
-    <%= f.password_field :current_password, autocomplete: "off" %>
-  </div>
 
   <div class="field">
   <%= select_tag :role, options_from_collection_for_select(Role.all,"name","name") %>

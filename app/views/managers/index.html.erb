@@ -24,8 +24,8 @@
                 <td><%= manager.email %></td>
                 <td><%= manager.phone %></td>
                 <td>
-                  <%= link_to '', edit_manager_path(manager), class: 'btn btn-info fa fa-edit'%>
-                  <%= link_to '', manager, class: 'fa fa-close btn btn-danger', method: :delete, data: {confirm: '¿Estas seguro?'}%>
+                  <%= link_to '', edit_manager_path(manager), class: 'btn btn-default fa fa-pencil'%>
+                  <%= link_to '', manager, class: 'fa fa-close btn btn-default', method: :delete, data: {confirm: '¿Estas seguro?'}%>
                 </td>
               </tr>
             <% end %>
